@@ -1,0 +1,100 @@
+.monthAside {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  padding: 16px;
+  position: fixed;
+  top: 120px;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 2;
+  width: 300px;
+}
+
+.addEventButton {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin-bottom: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.calendarWidgetDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  color: grey;
+}
+
+.calendarWidgetDates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  justify-content: center;
+}
+
+.calendarWidgetDates div {
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.calendarWidgetDates div:hover {
+  background-color: #a0beee;
+  color: black;
+  border-radius: 50%;
+}
+.calendarWidgetDays div {
+  text-align: center;
+  padding: 10px;
+}
+
+.calendarWidgetDates div.selected {
+  background-color: #a0beee;
+  color: black;
+  border-radius: 50%;
+}
+
+.calendarWidgetDates div.today {
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 50%;
+}
+
+.calendarWidgetDates div.prevMonthDay,
+.calendarWidgetDates div.nextMonthDay {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.switchWeeksWidget {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: white;
+  border: none;
+  font-weight: lighter;
+  font-size: 20px;
+  cursor: pointer;
+}
+.switchWeeksWidget:hover {
+  font-weight: bold;
+}
+
+.calendarWidgetHeader {
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.calendarWidgetCurrentYearAndMonth {
+  font-size: 20px;
+  font-weight: 600;
+}

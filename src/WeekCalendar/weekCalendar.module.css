@@ -1,0 +1,134 @@
+:root {
+  --background-color: white;
+  --grid-border-color: rgb(143, 136, 136);
+  --grid-font-color: rgb(134, 134, 142);
+  --nav-font-size: 30px;
+}
+
+.multiDayEventsContainer {
+  display: grid;
+  background-color: var(--background-color);
+  grid-column: 2 / 3;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.5em;
+  background-color: var(--background-color);
+  border-right: 1px solid #ccc;
+  position: relative;
+}
+
+.day:first-child {
+  grid-column: 2;
+}
+
+.timeColumn {
+  display: grid;
+  grid-template-rows: repeat(19, 1fr);
+  background-color: #fff;
+  color: var(--grid-font-color);
+}
+
+.timestamp {
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 60px;
+}
+
+.calendarCells {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(19, 1fr);
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.cell {
+  border: 1px solid #ccc;
+  border-left: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 60px;
+}
+
+.calendarEvent {
+  position: absolute;
+  background-color: rgba(85, 135, 173, 0.8);
+  border: 1px solid rgb(85, 135, 173);
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  color: white;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+}
+
+.calendarEvent:hover {
+  z-index: 1000;
+}
+
+.weekHeader {
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: 50px repeat(7, 1fr);
+  color: var(--grid-font-color);
+  background-color: var(--background-color);
+  margin-top: 92px;
+  top: 92px;
+
+  position: sticky;
+  height: 80px;
+  z-index: 1;
+}
+
+.calendarMain {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  overscroll-behavior: none;
+}
+
+.dayNumber {
+  margin-top: 5px;
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.dayName {
+  font-size: 18px;
+}
+
+.currentDay .dayNumber {
+  background-color: rgb(85, 135, 173);
+  color: white;
+  width: 15%;
+  height: 20px;
+  text-align: center;
+  color: white;
+  border-radius: 50%;
+}
+
+.multiDayEvent {
+  grid-column: span 1;
+  cursor: pointer;
+  position: relative;
+  height: 20px;
+  background-color: red;
+  border: 1px solid rgb(85, 135, 173);
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  padding: 2px 5px;
+  box-sizing: border-box;
+}
