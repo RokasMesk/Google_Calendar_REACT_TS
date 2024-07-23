@@ -50,20 +50,6 @@ export const getFormattedDate = (date: Date) => {
   });
 };
 
-export const getCellDay = (
-  index: number,
-  startDay: number,
-  totalDays: number,
-  previousMonthTotalDays: number
-): number => {
-  if (index < startDay) {
-    return previousMonthTotalDays - (startDay - index - 1);
-  } else if (index < startDay + totalDays) {
-    return index - startDay + 1;
-  } else {
-    return index - (startDay + totalDays) + 1;
-  }
-};
 
 export const getCellType = (
   index: number,
