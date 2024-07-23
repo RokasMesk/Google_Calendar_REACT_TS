@@ -1,5 +1,5 @@
 import { getFirstDayOfTheWeek, isToday } from '../utils';
-import styles from './calendar-main.module.css';
+import styles from './week-calendar.module.css';
 
 interface CalendarWeekDayHeaderProps {
   date: Date;

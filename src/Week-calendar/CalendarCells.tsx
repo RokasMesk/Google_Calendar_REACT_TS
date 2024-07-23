@@ -1,4 +1,4 @@
-import styles from './calendar-main.module.css';
+import styles from './week-calendar.module.css';
 
 const CalendarCells = () => (
   <div className={styles.calendarCells} id="calendarCells">

@@ -1,8 +1,8 @@
-import styles from './calendar-main.module.css';
+import styles from './week-calendar.module.css';
 import CalendarCells from './CalendarCells';
 import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 
-interface CalendarMainProps {
+interface WeekCalendarProps {
   date: Date;
 }
 
@@ -22,7 +22,7 @@ const generateTimestamps = () => {
   );
 };
 
-function CalendarMain({ date }: CalendarMainProps) {
+function WeekCalendar({ date }: WeekCalendarProps) {
   return (
     <main className={styles.calendarMain}>
       <div className={styles.multiDayEventsContainer}></div>
@@ -33,4 +33,4 @@ function CalendarMain({ date }: CalendarMainProps) {
   );
 }
 
-export default CalendarMain;
+export default WeekCalendar;
