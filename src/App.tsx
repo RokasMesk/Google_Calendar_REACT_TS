@@ -1,6 +1,6 @@
 import Header from './Header/Header';
 import Aside from './Aside/Aside';
-import WeekCalendar from './Week-calendar/WeekCalendar';
+import WeekCalendar from './WeekCalendar/WeekCalendar';
 import styles from './index.module.css';
 
 function App() {

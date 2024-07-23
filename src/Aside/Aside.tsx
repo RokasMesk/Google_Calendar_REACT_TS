@@ -7,9 +7,7 @@ interface AsideProps {
 function Aside({ date }: AsideProps) {
   return (
     <aside className={styles.monthAside}>
-      <button className={styles.addEventButton} id="addEventButton">
-        Create Event
-      </button>
+      <button className={styles.addEventButton}>Create Event</button>
       <MonthCalendar date={date} />
     </aside>
   );

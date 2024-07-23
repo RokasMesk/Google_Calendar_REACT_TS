@@ -1,3 +1,4 @@
+import { ArrowLeft, ArrowRight } from '../components/icons';
 import styles from './aside.module.css';
 
 interface CalendarHeaderProps {
@@ -7,21 +8,18 @@ interface CalendarHeaderProps {
 const MonthCalendarHeader = ({ date }: CalendarHeaderProps) => {
   return (
     <div className={styles.calendarWidgetHeader}>
-      <span
-        id="currentDateCalendarWidget"
-        className={styles.calendarWidgetCurrentDay}
-      >
+      <span className={styles.calendarWidgetCurrentYearAndMonth}>
         {date.toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'short',
         })}
       </span>
-      <div className="calendar-widget-controls-group">
-        <button id="prevMonth" className={styles.switchWeeksWidget}>
-          &lt;
+      <div className={styles.calendarWidgetControlsGroup}>
+        <button className={styles.switchWeeksWidget}>
+          <ArrowLeft width={20} height={20} />
         </button>
-        <button id="nextMonth" className={styles.switchWeeksWidget}>
-          &gt;
+        <button className={styles.switchWeeksWidget}>
+          <ArrowRight width={20} height={20} />
         </button>
       </div>
     </div>

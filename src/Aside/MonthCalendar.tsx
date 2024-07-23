@@ -1,7 +1,7 @@
 import styles from './aside.module.css';
 import MonthCalendarHeader from './MonthCalendarHeader';
 import DateCells from './DateCells';
-import DayNames from './MonthCalendarDayNames';
+import MonthCalendarDayNames from './MonthCalendarDayNames';
 interface MonthCalendarProps {
   date: Date;
 }
@@ -9,7 +9,7 @@ function MonthCalendar({ date }: MonthCalendarProps) {
   return (
     <div className={styles.calendarWidget}>
       <MonthCalendarHeader date={date} />
-      <DayNames />
+      <MonthCalendarDayNames />
       <DateCells date={date} />
     </div>
   );
