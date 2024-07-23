@@ -5,7 +5,7 @@
   --nav-font-size: 30px;
 }
 
-.calendar-header {
+.calendarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,19 +19,19 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 }
-.header-group-controls {
+.headerGroupControls {
   margin-right: 100px;
 }
 
-.header-part {
+.headerPart {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.header-button {
+.headerButton {
   background: none;
   border: 1px solid #ccc;
   padding: 10px;
@@ -42,22 +42,22 @@
   color: #333;
 }
 
-.header-button.svg {
+.headerButton.svg {
   vertical-align: middle;
 }
 
-.header-button.no-border {
+.headerButton.noBorder {
   border: none;
 }
 
-.calendar-title {
+.calendarTitle {
   font-size: var(--nav-font-size);
   font-weight: bold;
   margin-right: 10px;
   margin-left: 10px;
 }
 
-.current-month {
+.currentMonth {
   font-size: var(--nav-font-size);
   margin-left: 12px;
 }

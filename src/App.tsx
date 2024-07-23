@@ -1,19 +1,15 @@
-import React from 'react';
-import Header from './components/Header';
-import Aside from './components/Aside';
-import CalendarMain from './components/CalendarMain';
-import { useState } from 'react';
+import Header from './Header/Header';
+import Aside from './Aside/Aside';
+import CalendarMain from './Calendar-main/CalendarMain';
+import styles from './index.module.css';
 
 function App() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const handleDateChange = (newDate: Date) => {
-    setCurrentDate(newDate);
-  };
+  const currentDate = new Date();
   return (
-    <div className="app-container">
-      <Header onDateChange={handleDateChange} date={currentDate}></Header>
-      <Aside date={currentDate}></Aside>
-      <CalendarMain date={currentDate}></CalendarMain>
+    <div className={styles.appContainer}>
+      <Header date={currentDate} />
+      <Aside date={currentDate} />
+      <CalendarMain date={currentDate} />
     </div>
   );
 }

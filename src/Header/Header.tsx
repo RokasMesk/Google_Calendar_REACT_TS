@@ -1,15 +1,17 @@
-import React from 'react';
-import '../styles/header.css';
+import styles from './header.module.css';
+
 interface HeaderProps {
-  onDateChange: (date: Date) => void;
   date: Date;
 }
-function Header({ onDateChange, date }: HeaderProps) {
+
+const Header = ({ date }: HeaderProps) => {
   return (
-    <header className="calendar-header">
-      <div className="header-part">
-        <div className="header-group-controls">
-          <button className="header-button no-border svg">
+    <header className={styles.calendarHeader}>
+      <div className={styles.headerPart}>
+        <div className={styles.headerGroupControls}>
+          <button
+            className={`${styles.headerButton} ${styles.noBorder} ${styles.svg}`}
+          >
             <svg
               fill="#000000"
               width="36px"
@@ -23,19 +25,25 @@ function Header({ onDateChange, date }: HeaderProps) {
               />
             </svg>
           </button>
-          <span className="calendar-title">Calendar</span>
+          <span className={styles.calendarTitle}>Calendar</span>
         </div>
-        <div className="header-group-controls">
-          <button className="header-button" id="todayButton">
+        <div className={styles.headerGroupControls}>
+          <button className={styles.headerButton} id="todayButton">
             Today
           </button>
-          <button className="header-button no-border" id="previousWeekButton">
+          <button
+            className={`${styles.headerButton} ${styles.noBorder}`}
+            id="previousWeekButton"
+          >
             ◀
           </button>
-          <button className="header-button no-border" id="nextWeekButton">
+          <button
+            className={`${styles.headerButton} ${styles.noBorder}`}
+            id="nextWeekButton"
+          >
             ▶
           </button>
-          <span className="current-month" id="currentMonthAndDay">
+          <span className={styles.currentMonth} id="currentMonthAndDay">
             {date.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'short',
@@ -43,8 +51,8 @@ function Header({ onDateChange, date }: HeaderProps) {
           </span>
         </div>
       </div>
-      <div className="header-part">
-        <button className="header-button svg">
+      <div className={styles.headerPart}>
+        <button className={`${styles.headerButton} ${styles.svg}`}>
           Week
           <svg
             width="15px"
@@ -63,5 +71,6 @@ function Header({ onDateChange, date }: HeaderProps) {
       </div>
     </header>
   );
-}
+};
+
 export default Header;

@@ -1,14 +1,13 @@
 * {
   box-sizing: border-box;
 }
-.app-container {
+.appContainer {
   display: grid;
   grid-template-rows: auto auto 1fr;
   grid-template-columns: 300px 1fr;
   height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
-  overflow: none;
 }
 
 code {

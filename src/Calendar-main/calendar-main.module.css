@@ -5,7 +5,7 @@
   --nav-font-size: 30px;
 }
 
-.multi-day-events-container {
+.multiDayEventsContainer {
   display: grid;
   background-color: var(--background-color);
   grid-column: 2 / 3;
@@ -27,7 +27,7 @@
   grid-column: 2;
 }
 
-.time-column {
+.timeColumn {
   display: grid;
   grid-template-rows: repeat(19, 1fr);
   background-color: #fff;
@@ -41,12 +41,13 @@
   height: 60px;
 }
 
-.calendar-cells {
+.calendarCells {
   display: grid;
   position: relative;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(19, 1fr);
   background-color: #fff;
+  overflow-y: auto;
 }
 
 .cell {
@@ -57,7 +58,7 @@
   height: 60px;
 }
 
-.calendar-event {
+.calendarEvent {
   position: absolute;
   background-color: rgba(85, 135, 173, 0.8);
   border: 1px solid rgb(85, 135, 173);
@@ -70,11 +71,11 @@
   overflow: hidden;
 }
 
-.calendar-event:hover {
+.calendarEvent:hover {
   z-index: 1000;
 }
 
-.week-header {
+.weekHeader {
   grid-column: 1 / span 2;
   display: grid;
   grid-template-columns: 50px repeat(7, 1fr);
@@ -88,27 +89,27 @@
   z-index: 1;
 }
 
-.calendar-main {
+.calendarMain {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   display: grid;
   grid-template-columns: 50px 1fr;
   grid-template-rows: auto 1fr;
   gap: 0;
-  overflow-y: auto;
+  overscroll-behavior: none;
 }
 
-.day-number {
+.dayNumber {
   margin-top: 5px;
   font-size: 18px;
   margin-top: 15px;
 }
 
-.day-name {
+.dayName {
   font-size: 18px;
 }
 
-.current-day .day-number {
+.currentDay .dayNumber {
   background-color: rgb(85, 135, 173);
   color: white;
   width: 15%;
@@ -118,7 +119,7 @@
   border-radius: 50%;
 }
 
-.multi-day-event {
+.multiDayEvent {
   grid-column: span 1;
   cursor: pointer;
   position: relative;
