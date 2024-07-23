@@ -1,3 +1,4 @@
+import { getFormattedDate } from '../utils';
 import styles from './header.module.css';
 
 interface CurrentYearAndMonthProps {
@@ -5,14 +6,7 @@ interface CurrentYearAndMonthProps {
 }
 
 const CurrentYearAndMonth = ({ date }: CurrentYearAndMonthProps) => {
-  return (
-    <span className={styles.currentMonth}>
-      {date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-      })}
-    </span>
-  );
+  return <span className={styles.currentMonth}>{getFormattedDate(date)}</span>;
 };
 
 export default CurrentYearAndMonth;

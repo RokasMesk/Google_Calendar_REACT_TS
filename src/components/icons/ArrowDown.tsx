@@ -1,9 +1,9 @@
-interface ArrowRightProps {
+interface ArrowDownProps {
   width: number;
   height: number;
 }
 
-export const ArrowDown = ({ width, height }: ArrowRightProps) => {
+export const ArrowDown = ({ width, height }: ArrowDownProps) => {
   return (
     <svg
       width={width}

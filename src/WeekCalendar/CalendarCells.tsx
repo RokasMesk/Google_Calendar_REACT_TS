@@ -4,7 +4,10 @@ import { createArray } from '../utils';
 const CalendarCells = () => (
   <div className={styles.calendarCells}>
     {createArray(DAYS_IN_WEEK * CELLS_IN_COLUMN).map((_, i) => {
-      return <div className={styles.cell} key={i}></div>;
+      const day = Math.floor(i / CELLS_IN_COLUMN);
+      const hour = i % CELLS_IN_COLUMN;
+      const key = `${day}-${hour}`;
+      return <div className={styles.cell} key={key}></div>;
     })}
   </div>
 );

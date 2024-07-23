@@ -1,15 +1,10 @@
+import React from 'react';
 import classNames from 'classnames';
-import {
-  getCurrentCellDate,
-  isCurrentMonth,
-  isPreviousMonth,
-  isToday,
-} from '../utils';
+import { getCellDay, getCellType, isToday, getCurrentCellDate } from '../utils';
 import styles from './aside.module.css';
 import {
-  getDisplayedMonth,
-  getFirstDayOfMonth,
-  getLastDayOfMonth,
+  getFirstDayOfMonthInFullDate,
+  getLastDayOfMonthInFullDate,
   getPreviousMonthTotalDays,
   getStartDay,
 } from '../utils';
@@ -20,35 +15,35 @@ interface DateCellsProps {
 }
 
 const DateCells = ({ date }: DateCellsProps) => {
-  const displayedMonth = getDisplayedMonth(date);
-  const firstDayOfMonth = getFirstDayOfMonth(displayedMonth);
-  const startDay = getStartDay(firstDayOfMonth);
-  const lastDayOfMonth = getLastDayOfMonth(displayedMonth);
-  const totalDays = lastDayOfMonth.getDate();
-  const previousMonthTotalDays = getPreviousMonthTotalDays(displayedMonth);
+  const firstDayOfMonthInFullDate = getFirstDayOfMonthInFullDate(date);
+  const startDay = getStartDay(firstDayOfMonthInFullDate);
+  const lastDayOfMonthInFullDate = getLastDayOfMonthInFullDate(
+    firstDayOfMonthInFullDate
+  );
+  const totalDays = lastDayOfMonthInFullDate.getDate();
+  const previousMonthTotalDays = getPreviousMonthTotalDays(
+    firstDayOfMonthInFullDate
+  );
 
   return (
     <div className={styles.calendarWidgetDates}>
       {Array.from({ length: CELLS_IN_MONTH_CALENDAR }).map((_, index) => {
-        let day;
-        let className = '';
+        const cellType = getCellType(index, startDay - 1, totalDays);
+        const day = getCellDay(
+          index,
+          startDay - 1,
+          totalDays,
+          previousMonthTotalDays
+        );
+        const cellDate = getCurrentCellDate(firstDayOfMonthInFullDate, day);
 
-        if (isPreviousMonth(index, startDay - 1)) {
-          day = previousMonthTotalDays - (startDay - 2 - index);
-          className = styles.prevMonthDay;
-        } else if (isCurrentMonth(index, startDay - 1 + totalDays)) {
-          day = index - (startDay - 2);
-          const cellDate = getCurrentCellDate(displayedMonth, day);
-          className = classNames({
-            [styles.today]: isToday(cellDate),
-          });
-        } else {
-          day = index - (startDay - 1 + totalDays) + 1;
-          className = styles.nextMonthDay;
-        }
-
+        const className = classNames(styles.cell, {
+          [styles.today]: cellType === 'currentMonth' && isToday(cellDate),
+          [styles.prevMonthDay]: cellType === 'prevMonth',
+          [styles.nextMonthDay]: cellType === 'nextMonth',
+        });
         return (
-          <div className={className} key={`${className}-${day}`}>
+          <div className={className} key={`${cellType}-${day}`}>
             {day}
           </div>
         );

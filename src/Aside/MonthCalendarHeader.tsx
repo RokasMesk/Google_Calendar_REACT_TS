@@ -1,4 +1,5 @@
 import { ArrowLeft, ArrowRight } from '../components/icons';
+import { getFormattedDate } from '../utils';
 import styles from './aside.module.css';
 
 interface CalendarHeaderProps {
@@ -9,10 +10,7 @@ const MonthCalendarHeader = ({ date }: CalendarHeaderProps) => {
   return (
     <div className={styles.calendarWidgetHeader}>
       <span className={styles.calendarWidgetCurrentYearAndMonth}>
-        {date.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-        })}
+        {getFormattedDate(date)}
       </span>
       <div className={styles.calendarWidgetControlsGroup}>
         <button className={styles.switchWeeksWidget}>

@@ -16,15 +16,11 @@ export function isToday(date: Date): boolean {
   );
 }
 
-export const getDisplayedMonth = (date: Date) => {
+export const getFirstDayOfMonthInFullDate = (date: Date) => {
   return new Date(date.getFullYear(), date.getMonth(), 1);
 };
 
-export const getFirstDayOfMonth = (date: Date) => {
-  return new Date(date.getFullYear(), date.getMonth(), 1);
-};
-
-export const getLastDayOfMonth = (date: Date) => {
+export const getLastDayOfMonthInFullDate = (date: Date) => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0);
 };
 
@@ -43,17 +39,42 @@ export const createArray = (length: number) => {
   return new Array(length).fill(undefined);
 };
 
-export const isPreviousMonth = (currentDay: number, startDay: number) => {
-  return currentDay < startDay;
-};
-
-export const isCurrentMonth = (
-  currentDay: number,
-  upperBoundOfMonth: number
-) => {
-  return currentDay < upperBoundOfMonth;
-};
-
 export const getCurrentCellDate = (displayedMonth: Date, day: number) => {
   return new Date(displayedMonth.getFullYear(), displayedMonth.getMonth(), day);
+};
+
+export const getFormattedDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+  });
+};
+
+export const getCellDay = (
+  index: number,
+  startDay: number,
+  totalDays: number,
+  previousMonthTotalDays: number
+): number => {
+  if (index < startDay) {
+    return previousMonthTotalDays - (startDay - index - 1);
+  } else if (index < startDay + totalDays) {
+    return index - startDay + 1;
+  } else {
+    return index - (startDay + totalDays) + 1;
+  }
+};
+
+export const getCellType = (
+  index: number,
+  startDay: number,
+  totalDays: number
+): 'prevMonth' | 'currentMonth' | 'nextMonth' => {
+  if (index < startDay) {
+    return 'prevMonth';
+  } else if (index < startDay + totalDays) {
+    return 'currentMonth';
+  } else {
+    return 'nextMonth';
+  }
 };

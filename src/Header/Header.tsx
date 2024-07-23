@@ -7,6 +7,7 @@ import {
 } from '../components/icons';
 import TodayButton from './TodayButton';
 import CurrentYearAndMonth from './CurrentYearAndMonth';
+import classNames from 'classnames';
 interface HeaderProps {
   date: Date;
 }
@@ -36,7 +37,7 @@ const Header = ({ date }: HeaderProps) => {
 
 const WeekButton = () => {
   return (
-    <button className={`${styles.headerButton} ${styles.svg}`}>
+    <button className={classNames(styles.headerButton, styles.svg)}>
       Week
       <ArrowDown width={15} height={15} />
     </button>
@@ -45,7 +46,7 @@ const WeekButton = () => {
 
 const ArrowLeftButton = () => {
   return (
-    <button className={`${styles.headerButton} ${styles.noBorder}`}>
+    <button className={classNames(styles.headerButton, styles.noBorder)}>
       <ArrowLeft width={30} height={20} />
     </button>
   );
@@ -53,7 +54,7 @@ const ArrowLeftButton = () => {
 
 const ArrowRightButton = () => {
   return (
-    <button className={`${styles.headerButton} ${styles.noBorder}`}>
+    <button className={classNames(styles.headerButton, styles.noBorder)}>
       <ArrowRight width={30} height={20} />
     </button>
   );
@@ -62,7 +63,7 @@ const ArrowRightButton = () => {
 const BurgerMenuButton = () => {
   return (
     <button
-      className={`${styles.headerButton} ${styles.noBorder} ${styles.svg}`}
+      className={classNames(styles.headerButton, styles.noBorder, styles.svg)}
     >
       <BurgerMenu width={36} height={36} />
     </button>
