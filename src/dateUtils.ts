@@ -21,6 +21,17 @@ export function isToday(date: Date): boolean {
   );
 }
 
+export const areTwoDatesEqual = (
+  firstDate: Date,
+  secondDate: Date
+): boolean => {
+  return (
+    firstDate.getFullYear() === secondDate.getFullYear() &&
+    firstDate.getMonth() === secondDate.getMonth() &&
+    firstDate.getDate() === secondDate.getDate()
+  );
+};
+
 export const getFirstDayOfMonthInFullDate = (date: Date) => {
   return new Date(date.getFullYear(), date.getMonth(), 1);
 };

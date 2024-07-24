@@ -4,6 +4,7 @@ import {
   isToday,
   getCurrentCellDate,
   adjustMonthByCellType,
+  areTwoDatesEqual,
 } from '../dateUtils';
 import { useState } from 'react';
 import styles from './aside.module.css';
@@ -56,7 +57,7 @@ const DateCells = ({ date, setCurrentDate }: DateCellsProps) => {
           [styles.prevMonthDay]: cellType === 'prevMonth',
           [styles.nextMonthDay]: cellType === 'nextMonth',
           [styles.selected]:
-            selectedDate && selectedDate.getTime() === cellDate.getTime(),
+            selectedDate && areTwoDatesEqual(selectedDate, cellDate),
         });
 
         return (
