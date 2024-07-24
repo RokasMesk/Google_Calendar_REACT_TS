@@ -1,12 +1,11 @@
 import classNames from 'classnames';
+import { getCellType } from '../utils';
 import {
-  getCellType,
   isToday,
   getCurrentCellDate,
   adjustMonthByCellType,
   areTwoDatesEqual,
 } from '../dateUtils';
-import { useState } from 'react';
 import styles from './aside.module.css';
 import {
   getFirstDayOfMonthInFullDate,
@@ -17,14 +16,12 @@ import {
 import { CELLS_IN_MONTH_CALENDAR } from '../constants';
 
 interface DateCellsProps {
-  date: Date;
-  setCurrentDate: (date: Date) => void;
+  calendarDate: Date;
+  setCalendarDate: (calendarDate: Date) => void;
 }
 
-const DateCells = ({ date, setCurrentDate }: DateCellsProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  const firstDayOfMonthInFullDate = getFirstDayOfMonthInFullDate(date);
+const DateCells = ({ calendarDate, setCalendarDate }: DateCellsProps) => {
+  const firstDayOfMonthInFullDate = getFirstDayOfMonthInFullDate(calendarDate);
   const startDay = getStartDay(firstDayOfMonthInFullDate);
   const lastDayOfMonthInFullDate = getLastDayOfMonthInFullDate(
     firstDayOfMonthInFullDate
@@ -34,10 +31,8 @@ const DateCells = ({ date, setCurrentDate }: DateCellsProps) => {
   const previousMonthTotalDays = getPreviousMonthTotalDays(
     firstDayOfMonthInFullDate
   );
-
   const handleDateClick = (cellDate: Date) => {
-    setSelectedDate(cellDate);
-    setCurrentDate(cellDate);
+    setCalendarDate(cellDate);
   };
 
   return (
@@ -50,21 +45,26 @@ const DateCells = ({ date, setCurrentDate }: DateCellsProps) => {
           totalDays,
           previousMonthTotalDays
         );
-        let cellDate = getCurrentCellDate(firstDayOfMonthInFullDate, day);
-        adjustMonthByCellType(cellDate, cellType, day);
+        const cellDate = getCurrentCellDate(firstDayOfMonthInFullDate, day);
+        const adjustedCellDateByMonth = adjustMonthByCellType(
+          cellDate,
+          cellType,
+          day
+        );
         const className = classNames(styles.cell, {
-          [styles.today]: cellType === 'currentMonth' && isToday(cellDate),
+          [styles.today]:
+            cellType === 'currentMonth' && isToday(adjustedCellDateByMonth),
           [styles.prevMonthDay]: cellType === 'prevMonth',
           [styles.nextMonthDay]: cellType === 'nextMonth',
           [styles.selected]:
-            selectedDate && areTwoDatesEqual(selectedDate, cellDate),
+            areTwoDatesEqual(calendarDate, adjustedCellDateByMonth),
         });
 
         return (
           <div
             className={className}
             key={`${cellType}-${day}`}
-            onClick={() => handleDateClick(cellDate)}
+            onClick={() => handleDateClick(adjustedCellDateByMonth)}
           >
             {day}
           </div>

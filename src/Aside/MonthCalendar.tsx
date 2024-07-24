@@ -4,39 +4,39 @@ import DateCells from './DateCells';
 import MonthCalendarDayNames from './MonthCalendarDayNames';
 import { useState, useEffect } from 'react';
 interface MonthCalendarProps {
-  date: Date;
-  setCurrentDate: (date: Date) => void;
+  calendarDate: Date;
+  setCalendarDate: (date: Date) => void;
 }
-function MonthCalendar({ date, setCurrentDate }: MonthCalendarProps) {
+function MonthCalendar({ calendarDate, setCalendarDate }: MonthCalendarProps) {
   const [displayedMonth, setDisplayedMonth] = useState(
-    new Date(date.getFullYear(), date.getMonth(), 1)
+    new Date(
+      calendarDate.getFullYear(),
+      calendarDate.getMonth(),
+      calendarDate.getDate()
+    )
   );
 
   useEffect(() => {
-    setDisplayedMonth(new Date(date.getFullYear(), date.getMonth(), 1));
-  }, [date]);
-
-  const handlePrevMonth = () => {
     setDisplayedMonth(
-      new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() - 1, 1)
+      new Date(
+        calendarDate.getFullYear(),
+        calendarDate.getMonth(),
+        calendarDate.getDate()
+      )
     );
-  };
-
-  const handleNextMonth = () => {
-    setDisplayedMonth(
-      new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() + 1, 1)
-    );
-  };
+  }, [calendarDate]);
 
   return (
     <div className={styles.calendarWidget}>
       <MonthCalendarHeader
-        date={displayedMonth}
-        onPrevMonth={handlePrevMonth}
-        onNextMonth={handleNextMonth}
+        displayedMonthDate={displayedMonth}
+        setDisplayedMonth={setDisplayedMonth}
       />
       <MonthCalendarDayNames />
-      <DateCells date={displayedMonth} setCurrentDate={setCurrentDate} />
+      <DateCells
+        calendarDate={displayedMonth}
+        setCalendarDate={setCalendarDate}
+      />
     </div>
   );
 }

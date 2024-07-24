@@ -62,34 +62,21 @@ export const getFormattedDate = (date: Date) => {
   });
 };
 
-export const getCellType = (
-  index: number,
-  startDay: number,
-  totalDays: number
-): 'prevMonth' | 'currentMonth' | 'nextMonth' => {
-  if (index < startDay) {
-    return 'prevMonth';
-  } else if (index < startDay + totalDays) {
-    return 'currentMonth';
-  } else {
-    return 'nextMonth';
-  }
-};
-
 export const adjustMonthByCellType = (
   date: Date,
   cellType: 'prevMonth' | 'currentMonth' | 'nextMonth',
   day: number
 ): Date => {
+  const newDate = new Date(date);
   switch (cellType) {
     case 'prevMonth':
-      date.setMonth(date.getMonth() - 1);
+      newDate.setMonth(newDate.getMonth() - 1);
       break;
     case 'nextMonth':
-      date.setMonth(date.getMonth() + 1);
+      newDate.setMonth(newDate.getMonth() + 1);
       break;
   }
 
-  date.setDate(day);
-  return date;
+  newDate.setDate(day);
+  return newDate;
 };

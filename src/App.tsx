@@ -6,12 +6,12 @@ import React from 'react';
 import { useState } from 'react';
 
 function App() {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [calendarDate, setCalendarDate] = useState(new Date());
   return (
     <div className={styles.appContainer}>
-      <Header date={currentDate} setCurrentDate={setCurrentDate} />
-      <Aside date={currentDate} setCurrentDate={setCurrentDate} />
-      <WeekCalendar date={currentDate} />
+      <Header calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
+      <Aside calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
+      <WeekCalendar calendarDate={calendarDate} />
     </div>
   );
 }
