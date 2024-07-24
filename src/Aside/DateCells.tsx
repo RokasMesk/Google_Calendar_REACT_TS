@@ -1,29 +1,43 @@
-import React from 'react';
 import classNames from 'classnames';
-import { getCellType, isToday, getCurrentCellDate } from '../utils';
+import {
+  getCellType,
+  isToday,
+  getCurrentCellDate,
+  adjustMonthByCellType,
+} from '../dateUtils';
+import { useState } from 'react';
 import styles from './aside.module.css';
 import {
   getFirstDayOfMonthInFullDate,
   getLastDayOfMonthInFullDate,
   getPreviousMonthTotalDays,
   getStartDay,
-} from '../utils';
+} from '../dateUtils';
 import { CELLS_IN_MONTH_CALENDAR } from '../constants';
 
 interface DateCellsProps {
   date: Date;
+  setCurrentDate: (date: Date) => void;
 }
 
-const DateCells = ({ date }: DateCellsProps) => {
+const DateCells = ({ date, setCurrentDate }: DateCellsProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
   const firstDayOfMonthInFullDate = getFirstDayOfMonthInFullDate(date);
   const startDay = getStartDay(firstDayOfMonthInFullDate);
   const lastDayOfMonthInFullDate = getLastDayOfMonthInFullDate(
     firstDayOfMonthInFullDate
   );
+
   const totalDays = lastDayOfMonthInFullDate.getDate();
   const previousMonthTotalDays = getPreviousMonthTotalDays(
     firstDayOfMonthInFullDate
   );
+
+  const handleDateClick = (cellDate: Date) => {
+    setSelectedDate(cellDate);
+    setCurrentDate(cellDate);
+  };
 
   return (
     <div className={styles.calendarWidgetDates}>
@@ -35,15 +49,22 @@ const DateCells = ({ date }: DateCellsProps) => {
           totalDays,
           previousMonthTotalDays
         );
-        const cellDate = getCurrentCellDate(firstDayOfMonthInFullDate, day);
-
+        let cellDate = getCurrentCellDate(firstDayOfMonthInFullDate, day);
+        adjustMonthByCellType(cellDate, cellType, day);
         const className = classNames(styles.cell, {
           [styles.today]: cellType === 'currentMonth' && isToday(cellDate),
           [styles.prevMonthDay]: cellType === 'prevMonth',
           [styles.nextMonthDay]: cellType === 'nextMonth',
+          [styles.selected]:
+            selectedDate && selectedDate.getTime() === cellDate.getTime(),
         });
+
         return (
-          <div className={className} key={`${cellType}-${day}`}>
+          <div
+            className={className}
+            key={`${cellType}-${day}`}
+            onClick={() => handleDateClick(cellDate)}
+          >
             {day}
           </div>
         );
@@ -52,8 +73,7 @@ const DateCells = ({ date }: DateCellsProps) => {
   );
 };
 
-
- const getCellDay = (
+const getCellDay = (
   index: number,
   startDay: number,
   totalDays: number,
@@ -67,4 +87,5 @@ const DateCells = ({ date }: DateCellsProps) => {
     return index - (startDay + totalDays) + 1;
   }
 };
+
 export default DateCells;

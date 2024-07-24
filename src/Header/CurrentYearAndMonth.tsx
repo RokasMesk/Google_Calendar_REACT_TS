@@ -1,4 +1,4 @@
-import { getFormattedDate } from '../utils';
+import { getFormattedDate } from '../dateUtils';
 import styles from './header.module.css';
 
 interface CurrentYearAndMonthProps {
