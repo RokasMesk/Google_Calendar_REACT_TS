@@ -32,28 +32,12 @@ export const areTwoDatesEqual = (
   );
 };
 
-export const getFirstDayOfMonthInFullDate = (date: Date) => {
-  return new Date(date.getFullYear(), date.getMonth(), 1);
-};
-
-export const getLastDayOfMonthInFullDate = (date: Date) => {
-  return new Date(date.getFullYear(), date.getMonth() + 1, 0);
-};
-
-export const getPreviousMonthTotalDays = (date: Date) => {
-  const previousMonthLastDay = new Date(date.getFullYear(), date.getMonth(), 0);
-  return previousMonthLastDay.getDate();
-};
-
 export const getStartDay = (firstDayOfMonth: Date) => {
   let startDay = firstDayOfMonth.getDay();
   if (startDay === 0) startDay = 7;
   return startDay;
 };
 
-export const getCurrentCellDate = (displayedMonth: Date, day: number) => {
-  return new Date(displayedMonth.getFullYear(), displayedMonth.getMonth(), day);
-};
 
 export const getFormattedDate = (date: Date) => {
   return date.toLocaleDateString('en-US', {
@@ -62,21 +46,48 @@ export const getFormattedDate = (date: Date) => {
   });
 };
 
-export const adjustMonthByCellType = (
-  date: Date,
-  cellType: 'prevMonth' | 'currentMonth' | 'nextMonth',
-  day: number
-): Date => {
-  const newDate = new Date(date);
-  switch (cellType) {
-    case 'prevMonth':
-      newDate.setMonth(newDate.getMonth() - 1);
-      break;
-    case 'nextMonth':
-      newDate.setMonth(newDate.getMonth() + 1);
-      break;
-  }
 
-  newDate.setDate(day);
-  return newDate;
+export const isDateFromThisMonth = (currentDate: Date, cellDate:Date): boolean => {
+  return (
+    cellDate.getFullYear() === currentDate.getFullYear() &&
+    cellDate.getMonth() === currentDate.getMonth()
+  );
 };
+
+export const getFirstDayOfMonth = (date:Date) => {
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    1
+  );
+}
+
+export const getLastMonthsFirstDayInMonthCalendar = (firstDayOfCurrentMonth:Date) => {
+  return new Date(
+    firstDayOfCurrentMonth.getFullYear(),
+    firstDayOfCurrentMonth.getMonth(),
+    firstDayOfCurrentMonth.getDate() - getStartDay(firstDayOfCurrentMonth) + 1
+  );
+}
+
+export const getCellDate = (baseDate:Date, offset:number) => {
+  const cellDate = new Date(baseDate);
+  cellDate.setDate(cellDate.getDate() + offset);
+  return cellDate;
+}
+
+export const getPreviousMonth = (displayedMonthDate: Date) => {
+  return new Date(
+    displayedMonthDate.getFullYear(),
+    displayedMonthDate.getMonth() - 1,
+    1
+  )
+}
+
+export const getNextMonth = (displayedMonthDate: Date) => {
+  return new Date(
+    displayedMonthDate.getFullYear(),
+    displayedMonthDate.getMonth() + 1,
+    1
+  )
+}

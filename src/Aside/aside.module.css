@@ -67,8 +67,8 @@
   border-radius: 50%;
 }
 
-.calendarWidgetDates div.prevMonthDay,
-.calendarWidgetDates div.nextMonthDay {
+
+.calendarWidgetDates div.notCurrentMonthDay {
   color: #ccc;
   cursor: pointer;
 }

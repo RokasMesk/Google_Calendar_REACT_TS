@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from '../components/icons';
-import { getFormattedDate } from '../dateUtils';
+import { getFormattedDate, getNextMonth, getPreviousMonth } from '../dateUtils';
 import styles from './aside.module.css';
 
 interface CalendarHeaderProps {
@@ -13,21 +13,13 @@ const MonthCalendarHeader = ({
 }: CalendarHeaderProps) => {
   const handlePreviousMonth = () => {
     setDisplayedMonth(
-      new Date(
-        displayedMonthDate.getFullYear(),
-        displayedMonthDate.getMonth() - 1,
-        1
-      )
+      getPreviousMonth(displayedMonthDate)
     );
   };
 
   const handleNextMonth = () => {
     setDisplayedMonth(
-      new Date(
-        displayedMonthDate.getFullYear(),
-        displayedMonthDate.getMonth() + 1,
-        1
-      )
+      getNextMonth(displayedMonthDate)
     );
   };
 
