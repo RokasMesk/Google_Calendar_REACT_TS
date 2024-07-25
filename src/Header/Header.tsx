@@ -5,14 +5,15 @@ import {
   ArrowRight,
   ArrowDown,
 } from '../components/icons';
-import TodayButton from './TodayButton';
 import CurrentYearAndMonth from './CurrentYearAndMonth';
 import classNames from 'classnames';
+import { addDays } from '../dateUtils';
 interface HeaderProps {
-  date: Date;
+  calendarDate: Date;
+  setCalendarDate: (calendarDate: Date) => void;
 }
 
-const Header = ({ date }: HeaderProps) => {
+const Header = ({ calendarDate, setCalendarDate }: HeaderProps) => {
   return (
     <header className={styles.calendarHeader}>
       <div className={styles.headerPart}>
@@ -21,17 +22,38 @@ const Header = ({ date }: HeaderProps) => {
           <span className={styles.calendarTitle}>Calendar</span>
         </div>
         <div className={styles.headerGroupControls}>
-          <TodayButton />
-          <ArrowLeftButton />
-          <ArrowRightButton />
+          <TodayButton setCalendarDate={setCalendarDate} />
+          <ArrowLeftButton
+            setCalendarDate={setCalendarDate}
+            calendarDate={calendarDate}
+          />
+          <ArrowRightButton
+            setCalendarDate={setCalendarDate}
+            calendarDate={calendarDate}
+          />
 
-          <CurrentYearAndMonth date={date} />
+          <CurrentYearAndMonth calendarDate={calendarDate} />
         </div>
       </div>
       <div className={styles.headerPart}>
         <WeekButton />
       </div>
     </header>
+  );
+};
+
+interface TodayButtonProps {
+  setCalendarDate: (calendarDate: Date) => void;
+}
+
+const TodayButton = ({ setCalendarDate }: TodayButtonProps) => {
+  const handleCurrentDay = () => {
+    setCalendarDate(new Date());
+  };
+  return (
+    <button className={styles.headerButton} onClick={handleCurrentDay}>
+      Today
+    </button>
   );
 };
 
@@ -44,17 +66,29 @@ const WeekButton = () => {
   );
 };
 
-const ArrowLeftButton = () => {
+const ArrowLeftButton = ({ calendarDate, setCalendarDate }: HeaderProps) => {
+  const handlePreviousWeek = () => {
+    setCalendarDate(addDays(calendarDate, -7));
+  };
   return (
-    <button className={classNames(styles.headerButton, styles.noBorder)}>
+    <button
+      className={classNames(styles.headerButton, styles.noBorder)}
+      onClick={handlePreviousWeek}
+    >
       <ArrowLeft width={30} height={20} />
     </button>
   );
 };
 
-const ArrowRightButton = () => {
+const ArrowRightButton = ({ calendarDate, setCalendarDate }: HeaderProps) => {
+  const handleNextWeek = () => {
+    setCalendarDate(addDays(calendarDate, +7));
+  };
   return (
-    <button className={classNames(styles.headerButton, styles.noBorder)}>
+    <button
+      className={classNames(styles.headerButton, styles.noBorder)}
+      onClick={handleNextWeek}
+    >
       <ArrowRight width={30} height={20} />
     </button>
   );

@@ -2,15 +2,39 @@ import styles from './aside.module.css';
 import MonthCalendarHeader from './MonthCalendarHeader';
 import DateCells from './DateCells';
 import MonthCalendarDayNames from './MonthCalendarDayNames';
+import { useState, useEffect } from 'react';
 interface MonthCalendarProps {
-  date: Date;
+  calendarDate: Date;
+  setCalendarDate: (date: Date) => void;
 }
-function MonthCalendar({ date }: MonthCalendarProps) {
+function MonthCalendar({ calendarDate, setCalendarDate }: MonthCalendarProps) {
+  const [displayedMonth, setDisplayedMonth] = useState(
+    new Date(
+      calendarDate.getFullYear(),
+      calendarDate.getMonth(),
+      calendarDate.getDate()
+    )
+  );
+
+  useEffect(() => {
+    setDisplayedMonth(
+      new Date(
+        calendarDate
+      )
+    );
+  }, [calendarDate]);
+
   return (
     <div className={styles.calendarWidget}>
-      <MonthCalendarHeader date={date} />
+      <MonthCalendarHeader
+        displayedMonthDate={displayedMonth}
+        setDisplayedMonth={setDisplayedMonth}
+      />
       <MonthCalendarDayNames />
-      <DateCells date={date} />
+      <DateCells
+        calendarDate={displayedMonth}
+        setCalendarDate={setCalendarDate}
+      />
     </div>
   );
 }

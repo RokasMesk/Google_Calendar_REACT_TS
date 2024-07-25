@@ -1,13 +1,14 @@
-import { createArray, getFirstDayOfTheWeek, isToday } from '../utils';
+import { getFirstDayOfTheWeek, isToday } from '../dateUtils';
+import { createArray } from '../utils';
 import styles from './weekCalendar.module.css';
 import classNames from 'classnames';
 
 interface CalendarWeekDayHeaderProps {
-  date: Date;
+  calendarDate: Date;
 }
 
-function CalendarWeekDayHeader({ date }: CalendarWeekDayHeaderProps) {
-  const startOfWeek = getFirstDayOfTheWeek(date);
+function CalendarWeekDayHeader({ calendarDate }: CalendarWeekDayHeaderProps) {
+  const startOfWeek = getFirstDayOfTheWeek(calendarDate);
 
   return (
     <div className={styles.weekHeader}>
@@ -16,12 +17,13 @@ function CalendarWeekDayHeader({ date }: CalendarWeekDayHeaderProps) {
         const day = new Date(startOfWeek);
         day.setDate(day.getDate() + i);
         const dayName = day.toLocaleDateString('en-US', { weekday: 'short' });
+        const dayKey = day.toISOString().split('T')[0];
         return (
           <div
             className={classNames(styles.day, {
               [styles.currentDay]: isToday(day),
             })}
-            key={i}
+            key={dayKey}
           >
             <span className={styles.dayName}>{dayName}</span>
             <span className={styles.dayNumber}>{day.getDate()}</span>

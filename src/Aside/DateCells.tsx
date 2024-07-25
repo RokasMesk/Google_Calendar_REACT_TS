@@ -1,50 +1,50 @@
-import React from 'react';
 import classNames from 'classnames';
-import { getCellType, isToday, getCurrentCellDate } from '../utils';
-import styles from './aside.module.css';
+import { createArray } from '../utils';
 import {
-  getFirstDayOfMonthInFullDate,
-  getLastDayOfMonthInFullDate,
-  getPreviousMonthTotalDays,
-  getStartDay,
-} from '../utils';
+  isToday,
+  areTwoDatesEqual,
+  isDateFromThisMonth,
+  getFirstDayOfMonth,
+  getLastMonthsFirstDayInMonthCalendar,
+  getCellDate,
+} from '../dateUtils';
+import styles from './aside.module.css';
 import { CELLS_IN_MONTH_CALENDAR } from '../constants';
 
 interface DateCellsProps {
-  date: Date;
+  calendarDate: Date;
+  setCalendarDate: (calendarDate: Date) => void;
 }
 
-const DateCells = ({ date }: DateCellsProps) => {
-  const firstDayOfMonthInFullDate = getFirstDayOfMonthInFullDate(date);
-  const startDay = getStartDay(firstDayOfMonthInFullDate);
-  const lastDayOfMonthInFullDate = getLastDayOfMonthInFullDate(
-    firstDayOfMonthInFullDate
-  );
-  const totalDays = lastDayOfMonthInFullDate.getDate();
-  const previousMonthTotalDays = getPreviousMonthTotalDays(
-    firstDayOfMonthInFullDate
-  );
+const DateCells = ({ calendarDate, setCalendarDate }: DateCellsProps) => {
+  const handleDateClick = (cellDate: Date) => {
+    setCalendarDate(cellDate);
+  };
+  const firstDayOfTheMonth = getFirstDayOfMonth(calendarDate);
 
+  const lastMonthsFirstDayInMonthCalendar =
+    getLastMonthsFirstDayInMonthCalendar(firstDayOfTheMonth);
   return (
     <div className={styles.calendarWidgetDates}>
-      {Array.from({ length: CELLS_IN_MONTH_CALENDAR }).map((_, index) => {
-        const cellType = getCellType(index, startDay - 1, totalDays);
-        const day = getCellDay(
-          index,
-          startDay - 1,
-          totalDays,
-          previousMonthTotalDays
-        );
-        const cellDate = getCurrentCellDate(firstDayOfMonthInFullDate, day);
+      {createArray(CELLS_IN_MONTH_CALENDAR).map((_, i) => {
+        const cellDate = getCellDate(lastMonthsFirstDayInMonthCalendar, i);
+        const cellDay = cellDate.getDate();
 
         const className = classNames(styles.cell, {
-          [styles.today]: cellType === 'currentMonth' && isToday(cellDate),
-          [styles.prevMonthDay]: cellType === 'prevMonth',
-          [styles.nextMonthDay]: cellType === 'nextMonth',
+          [styles.today]: isToday(cellDate),
+          [styles.notCurrentMonthDay]: !isDateFromThisMonth(
+            calendarDate,
+            cellDate
+          ),
+          [styles.selected]: areTwoDatesEqual(calendarDate, cellDate),
         });
         return (
-          <div className={className} key={`${cellType}-${day}`}>
-            {day}
+          <div
+            className={className}
+            key={`${cellDate.toISOString()}`}
+            onClick={() => handleDateClick(cellDate)}
+          >
+            {cellDay}
           </div>
         );
       })}
@@ -52,19 +52,4 @@ const DateCells = ({ date }: DateCellsProps) => {
   );
 };
 
-
- const getCellDay = (
-  index: number,
-  startDay: number,
-  totalDays: number,
-  previousMonthTotalDays: number
-): number => {
-  if (index < startDay) {
-    return previousMonthTotalDays - (startDay - index - 1);
-  } else if (index < startDay + totalDays) {
-    return index - startDay + 1;
-  } else {
-    return index - (startDay + totalDays) + 1;
-  }
-};
 export default DateCells;

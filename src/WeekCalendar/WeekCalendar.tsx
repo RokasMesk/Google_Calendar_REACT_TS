@@ -4,14 +4,14 @@ import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 import CalendarTimestamps from './CalendarTimestamps';
 
 interface WeekCalendarProps {
-  date: Date;
+  calendarDate: Date;
 }
 
-function WeekCalendar({ date }: WeekCalendarProps) {
+function WeekCalendar({ calendarDate }: WeekCalendarProps) {
   return (
     <main className={styles.calendarMain}>
       <div className={styles.multiDayEventsContainer}></div>
-      <CalendarWeekDayHeader date={date} />
+      <CalendarWeekDayHeader calendarDate={calendarDate} />
       <CalendarTimestamps />
       <CalendarCells />
     </main>

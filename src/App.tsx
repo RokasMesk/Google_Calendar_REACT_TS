@@ -2,14 +2,16 @@ import Header from './Header/Header';
 import Aside from './Aside/Aside';
 import WeekCalendar from './WeekCalendar/WeekCalendar';
 import styles from './index.module.css';
+import React from 'react';
+import { useState } from 'react';
 
 function App() {
-  const currentDate = new Date();
+  const [calendarDate, setCalendarDate] = useState(new Date());
   return (
     <div className={styles.appContainer}>
-      <Header date={currentDate} />
-      <Aside date={currentDate} />
-      <WeekCalendar date={currentDate} />
+      <Header calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
+      <Aside calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
+      <WeekCalendar calendarDate={calendarDate} />
     </div>
   );
 }
