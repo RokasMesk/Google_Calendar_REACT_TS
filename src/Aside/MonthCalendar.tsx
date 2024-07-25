@@ -17,11 +17,7 @@ function MonthCalendar({ calendarDate, setCalendarDate }: MonthCalendarProps) {
   );
 
   useEffect(() => {
-    setDisplayedMonth(
-      new Date(
-        calendarDate
-      )
-    );
+    setDisplayedMonth(new Date(calendarDate));
   }, [calendarDate]);
 
   return (

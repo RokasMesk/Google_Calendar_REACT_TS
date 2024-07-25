@@ -13,7 +13,7 @@ function WeekCalendar({ calendarDate }: WeekCalendarProps) {
       <div className={styles.multiDayEventsContainer}></div>
       <CalendarWeekDayHeader calendarDate={calendarDate} />
       <CalendarTimestamps />
-      <CalendarCells />
+      <CalendarCells calendarDate={calendarDate} />
     </main>
   );
 }

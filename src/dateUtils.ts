@@ -1,3 +1,5 @@
+import { DAYS_IN_WEEK } from './constants';
+
 export function getFirstDayOfTheWeek(date: Date): Date {
   let newDate = new Date(date);
   const day = newDate.getDay();
@@ -38,7 +40,6 @@ export const getStartDay = (firstDayOfMonth: Date) => {
   return startDay;
 };
 
-
 export const getFormattedDate = (date: Date) => {
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -46,48 +47,73 @@ export const getFormattedDate = (date: Date) => {
   });
 };
 
-
-export const isDateFromThisMonth = (currentDate: Date, cellDate:Date): boolean => {
+export const isDateFromThisMonth = (
+  currentDate: Date,
+  cellDate: Date
+): boolean => {
   return (
     cellDate.getFullYear() === currentDate.getFullYear() &&
     cellDate.getMonth() === currentDate.getMonth()
   );
 };
 
-export const getFirstDayOfMonth = (date:Date) => {
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    1
-  );
-}
+export const getFirstDayOfMonth = (date: Date) => {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+};
 
-export const getLastMonthsFirstDayInMonthCalendar = (firstDayOfCurrentMonth:Date) => {
+export const getLastMonthsFirstDayInMonthCalendar = (
+  firstDayOfCurrentMonth: Date
+) => {
   return new Date(
     firstDayOfCurrentMonth.getFullYear(),
     firstDayOfCurrentMonth.getMonth(),
     firstDayOfCurrentMonth.getDate() - getStartDay(firstDayOfCurrentMonth) + 1
   );
-}
+};
 
-export const getCellDate = (baseDate:Date, offset:number) => {
+export const getCellDate = (baseDate: Date, offset: number) => {
   const cellDate = new Date(baseDate);
   cellDate.setDate(cellDate.getDate() + offset);
   return cellDate;
-}
+};
 
 export const getPreviousMonth = (displayedMonthDate: Date) => {
   return new Date(
     displayedMonthDate.getFullYear(),
     displayedMonthDate.getMonth() - 1,
     1
-  )
-}
+  );
+};
 
 export const getNextMonth = (displayedMonthDate: Date) => {
   return new Date(
     displayedMonthDate.getFullYear(),
     displayedMonthDate.getMonth() + 1,
     1
-  )
-}
+  );
+};
+
+export const addOneHour = (hour: number): string => {
+  const addition = hour + 1;
+  return formatHourMinutesForInputForm(addition);
+};
+
+export const formatHourMinutesForInputForm = (hour: number): string => {
+  if (hour < 10) {
+    return `0${hour}:00`;
+  }
+  return `${hour}:00`;
+};
+
+export const calculateCellDate = (
+  calendarDate: Date,
+  indexOfCalendarCell: number
+): Date => {
+  const firstDayOfWeek = getFirstDayOfTheWeek(calendarDate);
+  const day = indexOfCalendarCell % DAYS_IN_WEEK;
+  const hourIndex = Math.floor(indexOfCalendarCell / DAYS_IN_WEEK);
+  const cellDate = new Date(firstDayOfWeek);
+  cellDate.setDate(cellDate.getDate() + day);
+  cellDate.setHours(5 + hourIndex);
+  return cellDate;
+};
