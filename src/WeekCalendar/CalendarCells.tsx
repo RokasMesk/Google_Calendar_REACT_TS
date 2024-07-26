@@ -1,20 +1,20 @@
-import { useState } from 'react';
 import styles from './weekCalendar.module.css';
 import { DAYS_IN_WEEK, CELLS_IN_COLUMN } from '../constants';
 import { createArray } from '../utils';
-import { calculateCellDate, getFirstDayOfTheWeek } from '../dateUtils';
-import CreateEventModal from '../Modal/CreateEventModal';
-
+import { calculateCellDate } from '../dateUtils';
 interface CalendarCellsProps {
   calendarDate: Date;
+  setInitialDateForModal: (date: Date | null) => void;
+  setShowModal: (flag: boolean) => void;
 }
 
-const CalendarCells = ({ calendarDate }: CalendarCellsProps) => {
-  const [showModal, setShowModal] = useState(false);
-  const [cellDate, setCellDate] = useState<Date | null>(null);
-
+const CalendarCells = ({
+  calendarDate,
+  setInitialDateForModal,
+  setShowModal,
+}: CalendarCellsProps) => {
   const handleCellClick = (date: Date) => {
-    setCellDate(date);
+    setInitialDateForModal(date);
     setShowModal(true);
   };
 
@@ -32,11 +32,6 @@ const CalendarCells = ({ calendarDate }: CalendarCellsProps) => {
           ></div>
         );
       })}
-      <CreateEventModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        initialDate={cellDate}
-      />
     </div>
   );
 };

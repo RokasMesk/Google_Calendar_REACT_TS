@@ -1,15 +1,20 @@
-import { useState } from 'react';
 import MonthCalendar from './MonthCalendar';
 import styles from './aside.module.css';
-import CreateEventModal from '../Modal/CreateEventModal';
 interface AsideProps {
   calendarDate: Date;
   setCalendarDate: (calendarDate: Date) => void;
+  setShowModal: (flag: boolean) => void;
+  setInitialDateForModal: (date: Date | null) => void;
 }
 
-function Aside({ calendarDate, setCalendarDate }: AsideProps) {
-  const [showModal, setShowModal] = useState(false);
+function Aside({
+  calendarDate,
+  setCalendarDate,
+  setShowModal,
+  setInitialDateForModal,
+}: AsideProps) {
   const handleCreateEventClick = () => {
+    setInitialDateForModal(null);
     setShowModal(true);
   };
   return (
@@ -24,7 +29,6 @@ function Aside({ calendarDate, setCalendarDate }: AsideProps) {
         calendarDate={calendarDate}
         setCalendarDate={setCalendarDate}
       />
-      <CreateEventModal showModal={showModal} setShowModal={setShowModal} />
     </aside>
   );
 }
