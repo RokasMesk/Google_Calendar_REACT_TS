@@ -1,14 +1,14 @@
 import { Event } from '../types';
 import styles from './createEventModal.module.css';
 import ModalContent from './ModalContent';
-import { CreateEventModalProps } from './ModalPropsTypes';
+import { CreateEventModalProps } from './modalPropsTypes';
 
 const CreateEventModal = ({
-  showModal,
-  setShowModal,
-  initialDate,
+  isOpen,
+  closeModal,
+  date,
 }: CreateEventModalProps) => {
-  if (!showModal) {
+  if (!isOpen) {
     return null;
   }
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -17,18 +17,18 @@ const CreateEventModal = ({
     }
   };
   const handleCloseModal = () => {
-    setShowModal(false);
+    closeModal(false);
   };
   const handleSaveEvent = (event: Event) => {
     console.log('Event was saved :', event);
-    setShowModal(false);
+    closeModal(false);
   };
   return (
     <div className={styles.modal} onClick={handleOverlayClick}>
       <ModalContent
         onClose={handleCloseModal}
         onSave={handleSaveEvent}
-        initialDate={initialDate}
+        initialDate={date}
       />
     </div>
   );

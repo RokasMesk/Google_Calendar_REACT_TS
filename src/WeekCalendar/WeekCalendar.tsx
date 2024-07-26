@@ -5,25 +5,16 @@ import CalendarTimestamps from './CalendarTimestamps';
 
 interface WeekCalendarProps {
   calendarDate: Date;
-  setInitialDateForModal: (date: Date | null) => void;
-  setShowModal: (flag: boolean) => void;
+  openModal: (date: Date) => void;
 }
 
-function WeekCalendar({
-  calendarDate,
-  setInitialDateForModal,
-  setShowModal,
-}: WeekCalendarProps) {
+function WeekCalendar({ calendarDate, openModal }: WeekCalendarProps) {
   return (
     <main className={styles.calendarMain}>
       <div className={styles.multiDayEventsContainer}></div>
       <CalendarWeekDayHeader calendarDate={calendarDate} />
       <CalendarTimestamps />
-      <CalendarCells
-        calendarDate={calendarDate}
-        setInitialDateForModal={setInitialDateForModal}
-        setShowModal={setShowModal}
-      />
+      <CalendarCells calendarDate={calendarDate} openModal={openModal} />
     </main>
   );
 }

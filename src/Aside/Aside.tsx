@@ -3,19 +3,12 @@ import styles from './aside.module.css';
 interface AsideProps {
   calendarDate: Date;
   setCalendarDate: (calendarDate: Date) => void;
-  setShowModal: (flag: boolean) => void;
-  setInitialDateForModal: (date: Date | null) => void;
+  openModal: (date: Date) => void;
 }
 
-function Aside({
-  calendarDate,
-  setCalendarDate,
-  setShowModal,
-  setInitialDateForModal,
-}: AsideProps) {
+function Aside({ calendarDate, setCalendarDate, openModal }: AsideProps) {
   const handleCreateEventClick = () => {
-    setInitialDateForModal(null);
-    setShowModal(true);
+    openModal(new Date());
   };
   return (
     <aside className={styles.monthAside}>

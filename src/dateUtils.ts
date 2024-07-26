@@ -61,9 +61,7 @@ export const getFirstDayOfMonth = (date: Date) => {
   return new Date(date.getFullYear(), date.getMonth(), 1);
 };
 
-export const getLastMonthsFirstDayInMonthCalendar = (
-  firstDayOfCurrentMonth: Date
-) => {
+export const getMonthCalendarStartDate = (firstDayOfCurrentMonth: Date) => {
   return new Date(
     firstDayOfCurrentMonth.getFullYear(),
     firstDayOfCurrentMonth.getMonth(),
@@ -71,7 +69,7 @@ export const getLastMonthsFirstDayInMonthCalendar = (
   );
 };
 
-export const getCellDate = (baseDate: Date, offset: number) => {
+export const getCellDateForMonthCalendar = (baseDate: Date, offset: number) => {
   const cellDate = new Date(baseDate);
   cellDate.setDate(cellDate.getDate() + offset);
   return cellDate;
@@ -95,17 +93,17 @@ export const getNextMonth = (displayedMonthDate: Date) => {
 
 export const addOneHour = (hour: number): string => {
   const addition = hour + 1;
-  return formatHourMinutesForInputForm(addition);
+  return formatTimeForModalForm(addition);
 };
 
-export const formatHourMinutesForInputForm = (hour: number): string => {
+export const formatTimeForModalForm = (hour: number): string => {
   if (hour < 10) {
     return `0${hour}:00`;
   }
   return `${hour}:00`;
 };
 
-export const calculateCellDate = (
+export const getCellDateForWeekCalendar = (
   calendarDate: Date,
   indexOfCalendarCell: number
 ): Date => {

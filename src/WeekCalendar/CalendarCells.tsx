@@ -1,27 +1,21 @@
 import styles from './weekCalendar.module.css';
 import { DAYS_IN_WEEK, CELLS_IN_COLUMN } from '../constants';
 import { createArray } from '../utils';
-import { calculateCellDate } from '../dateUtils';
+import { getCellDateForWeekCalendar } from '../dateUtils';
 interface CalendarCellsProps {
   calendarDate: Date;
-  setInitialDateForModal: (date: Date | null) => void;
-  setShowModal: (flag: boolean) => void;
+  openModal: (date: Date) => void;
 }
 
-const CalendarCells = ({
-  calendarDate,
-  setInitialDateForModal,
-  setShowModal,
-}: CalendarCellsProps) => {
+const CalendarCells = ({ calendarDate, openModal }: CalendarCellsProps) => {
   const handleCellClick = (date: Date) => {
-    setInitialDateForModal(date);
-    setShowModal(true);
+    openModal(date);
   };
 
   return (
     <div className={styles.calendarCells}>
       {createArray(DAYS_IN_WEEK * CELLS_IN_COLUMN).map((_, i) => {
-        const cellDate = calculateCellDate(calendarDate, i);
+        const cellDate = getCellDateForWeekCalendar(calendarDate, i);
         const key = `${calendarDate.getDate()}-${calendarDate.getHours() + i}`;
 
         return (

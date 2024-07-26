@@ -8,28 +8,25 @@ import CreateEventModal from './Modal/CreateEventModal';
 function App() {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [initialDateForModal, setInitialDateForModal] = useState<Date | null>(
-    null
-  );
+  const [initialDateForModal, setInitialDateForModal] = useState(new Date());
+  const openModal = (date: Date) => {
+    setInitialDateForModal(date);
+    setIsModalOpen(true);
+  };
   return (
     <div className={styles.appContainer}>
       <Header calendarDate={calendarDate} setCalendarDate={setCalendarDate} />
       <Aside
         calendarDate={calendarDate}
         setCalendarDate={setCalendarDate}
-        setShowModal={setIsModalOpen}
-        setInitialDateForModal={setInitialDateForModal}
+        openModal={openModal}
       />
-      <WeekCalendar
-        calendarDate={calendarDate}
-        setInitialDateForModal={setInitialDateForModal}
-        setShowModal={setIsModalOpen}
-      />
+      <WeekCalendar calendarDate={calendarDate} openModal={openModal} />
       <CreateEventModal
-        showModal={isModalOpen}
-        setShowModal={setIsModalOpen}
-        initialDate={initialDateForModal}
-      ></CreateEventModal>
+        isOpen={isModalOpen}
+        closeModal={setIsModalOpen}
+        date={initialDateForModal}
+      />
     </div>
   );
 }

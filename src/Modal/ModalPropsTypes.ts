@@ -24,7 +24,7 @@ export interface CloseButtonProps {
 }
 
 export interface CreateEventModalProps {
-  showModal: boolean;
-  setShowModal: (flag: boolean) => void;
-  initialDate?: Date | null;
+  isOpen: boolean;
+  closeModal: (flag: boolean) => void;
+  date: Date;
 }

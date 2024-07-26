@@ -2,35 +2,30 @@ import styles from './createEventModal.module.css';
 import { useState, useEffect } from 'react';
 import { generateSimpleID } from '../utils';
 import { Event } from '../types';
-import { formatHourMinutesForInputForm, addOneHour } from '../dateUtils';
-import {
-  CloseButtonProps,
-  ErrorMessageProps,
-  LabelInputPairProps,
-  LabelTextAreaProps,
-} from './ModalPropsTypes';
+import { formatTimeForModalForm, addOneHour } from '../dateUtils';
+import LabelInputPair from './LabelInputPair';
+import LabelTextAreaPair from './LabelTextAreaPair';
+import { CloseButtonProps, ErrorMessageProps } from './modalPropsTypes';
 
 interface ModalContentProps {
   onClose: () => void;
   onSave: (event: Event) => void;
-  initialDate?: Date | null;
+  initialDate: Date;
 }
 const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
   const [eventTitle, setEventTitle] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [endTime, setEndTime] = useState('');
+  const [startDate, setStartDate] = useState(
+    initialDate.toISOString().split('T')[0]
+  );
+  const [startTime, setStartTime] = useState(
+    formatTimeForModalForm(initialDate.getHours())
+  );
+  const [endDate, setEndDate] = useState(
+    initialDate.toISOString().split('T')[0]
+  );
+  const [endTime, setEndTime] = useState(addOneHour(initialDate.getHours()));
   const [description, setDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  useEffect(() => {
-    if (initialDate) {
-      setStartDate(initialDate.toISOString().split('T')[0]);
-      setEndDate(initialDate.toISOString().split('T')[0]);
-      setStartTime(formatHourMinutesForInputForm(initialDate.getHours()));
-      setEndTime(addOneHour(initialDate.getHours()));
-    }
-  }, [initialDate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,53 +125,6 @@ export const CloseButton = ({ onClose }: CloseButtonProps) => {
     <span className={styles.close} onClick={onClose}>
       &times;
     </span>
-  );
-};
-
-export const LabelInputPair = ({
-  parentDivClassName,
-  labelText,
-  inputType,
-  inputName,
-  value,
-  onChange,
-  inputClassName,
-}: LabelInputPairProps) => {
-  return (
-    <div className={parentDivClassName}>
-      <label className={styles.eventFormLabel}>{labelText}</label>
-      <input
-        className={inputClassName}
-        type={inputType}
-        id={inputName}
-        name={inputType}
-        required
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-
-export const LabelTextAreaPair = ({
-  labelText,
-  textAreaName,
-  value,
-  onChange,
-  textAreaClassName,
-}: LabelTextAreaProps) => {
-  return (
-    <div className={styles.datetime}>
-      <label className={styles.eventFormLabel}>{labelText}</label>
-      <textarea
-        className={textAreaClassName}
-        id={textAreaName}
-        name={textAreaName}
-        required
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      ></textarea>
-    </div>
   );
 };
 
