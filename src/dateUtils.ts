@@ -1,12 +1,18 @@
 import { DAYS_IN_WEEK } from './constants';
-
-export function getFirstDayOfTheWeek(date: Date): Date {
+import { MILLISECONDS } from './constants';
+export function getStartOfWeek(date: Date): Date {
   let newDate = new Date(date);
   const day = newDate.getDay();
   const diff = newDate.getDate() - day + (day === 0 ? -6 : 1);
   const startOfWeek = new Date(newDate.setDate(diff));
   startOfWeek.setHours(0, 0, 0, 0);
   return startOfWeek;
+}
+export function getEndOfWeek(startOfWeek:Date): Date {
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
+  return endOfWeek;
 }
 export const addDays = (date: Date, days: number): Date => {
   const result = new Date(date);
@@ -107,11 +113,20 @@ export const getCellDateForWeekCalendar = (
   calendarDate: Date,
   indexOfCalendarCell: number
 ): Date => {
-  const firstDayOfWeek = getFirstDayOfTheWeek(calendarDate);
+  const firstDayOfWeek = getStartOfWeek(calendarDate);
   const day = indexOfCalendarCell % DAYS_IN_WEEK;
   const hourIndex = Math.floor(indexOfCalendarCell / DAYS_IN_WEEK);
   const cellDate = new Date(firstDayOfWeek);
   cellDate.setDate(cellDate.getDate() + day);
   cellDate.setHours(5 + hourIndex);
   return cellDate;
+};
+
+export const differenceBetweenTwoDatesInDays = (
+  date1: string,
+  date2: string
+): number => {
+  const startDate = new Date(date1);
+  const endDate = new Date(date2);
+  return Math.ceil((endDate.getTime() - startDate.getTime()) / MILLISECONDS);
 };

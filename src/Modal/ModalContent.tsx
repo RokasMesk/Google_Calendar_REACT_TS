@@ -29,10 +29,10 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const startDateTime = new Date(`${startDate}T${startTime}`);
-    const endDateTime = new Date(`${endDate}T${endTime}`);
-
+    const startDateTime = new Date(`${startDate}T${startTime}:00`).toString();
+    const endDateTime = new Date(`${endDate}T${endTime}:00`).toString();
+    
+    
     if (endDateTime < startDateTime) {
       setErrorMessage(
         '* End date and time cant be earlier than start date and time.'

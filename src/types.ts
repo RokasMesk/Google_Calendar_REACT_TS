@@ -1,7 +1,7 @@
 export interface Event {
   id: string;
   eventTitle: string;
-  startDateTime: Date;
-  endDateTime: Date;
+  startDateTime: string;
+  endDateTime: string;
   description: string;
 }

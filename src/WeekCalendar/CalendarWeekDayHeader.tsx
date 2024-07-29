@@ -1,4 +1,4 @@
-import { getFirstDayOfTheWeek, isToday } from '../dateUtils';
+import {  getStartOfWeek, isToday } from '../dateUtils';
 import { createArray } from '../utils';
 import styles from './weekCalendar.module.css';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ interface CalendarWeekDayHeaderProps {
 }
 
 function CalendarWeekDayHeader({ calendarDate }: CalendarWeekDayHeaderProps) {
-  const startOfWeek = getFirstDayOfTheWeek(calendarDate);
+  const startOfWeek = getStartOfWeek(calendarDate);
 
   return (
     <div className={styles.weekHeader}>
