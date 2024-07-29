@@ -5,8 +5,8 @@ import {
   areTwoDatesEqual,
   isDateFromThisMonth,
   getFirstDayOfMonth,
-  getLastMonthsFirstDayInMonthCalendar,
-  getCellDate,
+  getMonthCalendarStartDate,
+  getCellDateForMonthCalendar,
 } from '../dateUtils';
 import styles from './aside.module.css';
 import { CELLS_IN_MONTH_CALENDAR } from '../constants';
@@ -22,12 +22,15 @@ const DateCells = ({ calendarDate, setCalendarDate }: DateCellsProps) => {
   };
   const firstDayOfTheMonth = getFirstDayOfMonth(calendarDate);
 
-  const lastMonthsFirstDayInMonthCalendar =
-    getLastMonthsFirstDayInMonthCalendar(firstDayOfTheMonth);
+  const monthCalendarStartDate =
+    getMonthCalendarStartDate(firstDayOfTheMonth);
   return (
     <div className={styles.calendarWidgetDates}>
       {createArray(CELLS_IN_MONTH_CALENDAR).map((_, i) => {
-        const cellDate = getCellDate(lastMonthsFirstDayInMonthCalendar, i);
+        const cellDate = getCellDateForMonthCalendar(
+          monthCalendarStartDate,
+          i
+        );
         const cellDay = cellDate.getDate();
 
         const className = classNames(styles.cell, {

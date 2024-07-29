@@ -12,15 +12,11 @@ const MonthCalendarHeader = ({
   setDisplayedMonth,
 }: CalendarHeaderProps) => {
   const handlePreviousMonth = () => {
-    setDisplayedMonth(
-      getPreviousMonth(displayedMonthDate)
-    );
+    setDisplayedMonth(getPreviousMonth(displayedMonthDate));
   };
 
   const handleNextMonth = () => {
-    setDisplayedMonth(
-      getNextMonth(displayedMonthDate)
-    );
+    setDisplayedMonth(getNextMonth(displayedMonthDate));
   };
 
   return (
