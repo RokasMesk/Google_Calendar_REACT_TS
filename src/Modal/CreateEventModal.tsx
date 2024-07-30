@@ -27,11 +27,8 @@ const CreateEventModal = ({
       const savedEvent = await saveEventToServer(event);
       const updatedEvents = [...events, savedEvent];
       setEvents(updatedEvents);
-      
-      console.log('Event was saved:', savedEvent);
       closeModal(false);
     } catch (error) {
-      console.error('Error saving event:', error);
     }
   };
 

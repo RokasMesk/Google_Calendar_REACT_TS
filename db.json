@@ -1,25 +1,46 @@
 {
   "events": [
     {
-      "id": "1722321102992-4475",
-      "eventTitle": "pirmas",
-      "startDateTime": "Tue Jul 30 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Tue Jul 30 2024 10:00:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "qqqqqqq"
+      "id": "1722331197890-9689",
+      "eventTitle": "asd",
+      "startDateTime": "2024-07-30T07:00:00.000Z",
+      "endDateTime": "2024-07-30T08:00:00.000Z",
+      "description": "asda"
     },
     {
-      "id": "1722321108473-420",
-      "eventTitle": "asdasd",
-      "startDateTime": "Wed Aug 07 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Wed Aug 07 2024 10:00:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "asdasd"
+      "id": "1722331208543-4064",
+      "eventTitle": "aaa",
+      "startDateTime": "2024-07-30T07:30:00.000Z",
+      "endDateTime": "2024-07-30T09:30:00.000Z",
+      "description": ""
     },
     {
-      "id": "1722321124975-3105",
-      "eventTitle": "ilgesnis",
-      "startDateTime": "Tue Jul 30 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Tue Jul 30 2024 15:13:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "asdasd"
+      "id": "1722334077548-8771",
+      "eventTitle": "asd",
+      "startDateTime": "2024-08-01T10:00:00.000Z",
+      "endDateTime": "2024-08-01T11:00:00.000Z",
+      "description": "asd"
+    },
+    {
+      "id": "1722334090283-5639",
+      "eventTitle": "ahaha",
+      "startDateTime": "2024-08-01T10:30:00.000Z",
+      "endDateTime": "2024-08-01T11:32:00.000Z",
+      "description": ""
+    },
+    {
+      "id": "1722335814648-3214",
+      "eventTitle": "asd",
+      "startDateTime": "2024-08-02T07:00:00.000Z",
+      "endDateTime": "2024-08-02T08:00:00.000Z",
+      "description": "asd"
+    },
+    {
+      "id": "1722336097978-1434",
+      "eventTitle": "adada",
+      "startDateTime": "2024-08-07T08:00:00.000Z",
+      "endDateTime": "2024-08-07T09:00:00.000Z",
+      "description": "adada"
     }
   ]
 }

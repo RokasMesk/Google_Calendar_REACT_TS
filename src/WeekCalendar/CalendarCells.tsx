@@ -1,10 +1,9 @@
 import styles from './weekCalendar.module.css';
 import { DAYS_IN_WEEK, CELLS_IN_COLUMN } from '../constants';
 import { createArray } from '../utils';
-import { getCellDateForWeekCalendar, getStartOfWeek } from '../dateUtils';
+import { getCellDateForWeekCalendar } from '../dateUtils';
 import { Event } from '../types';
-import { useRef } from 'react';
-import CalendarEvent from './CalendarEvent';
+import Cell from './Cell';
 
 interface CalendarCellsProps {
   calendarDate: Date;
@@ -21,31 +20,27 @@ const CalendarCells = ({
     openModal(date);
   };
 
-  const cellRef = useRef<HTMLDivElement>(null);
-
-  const cellWidth = (cellRef.current?.offsetWidth ?? 0) - 10;
-  const cellHeight = cellRef.current?.offsetHeight;
-
   return (
     <div className={styles.calendarCells} id="calendarCells">
       {createArray(DAYS_IN_WEEK * CELLS_IN_COLUMN).map((_, i) => {
         const cellDate = getCellDateForWeekCalendar(calendarDate, i);
         const key = `${calendarDate.getDate()}-${calendarDate.getHours() + i}`;
 
+        const eventsForCell = events?.filter((event) => {
+          const eventStartDateTime = new Date(event.startDateTime);
+          const doesEventBelongToCurrentCell =
+            eventStartDateTime.getDate() === cellDate.getDate() &&
+            eventStartDateTime.getHours() === cellDate.getHours();
+          return doesEventBelongToCurrentCell;
+        });
+
         return (
-          <div
-            className={styles.cell}
+          <Cell
+            cellDate={cellDate}
+            onCellClick={handleCellClick}
+            events={eventsForCell}
             key={key}
-            onClick={() => handleCellClick(cellDate)}
-            ref={cellRef}
-          >
-            <CalendarEvent
-              cellWidth={cellWidth}
-              cellHeight={cellHeight}
-              events={events ?? []}
-              cellDate={cellDate}
-            />
-          </div>
+          />
         );
       })}
     </div>

@@ -15,7 +15,6 @@ export const LabelTextAreaPair = ({
         className={textAreaClassName}
         id={textAreaName}
         name={textAreaName}
-        required
         value={value}
         onChange={(e) => onChange(e.target.value)}
       ></textarea>

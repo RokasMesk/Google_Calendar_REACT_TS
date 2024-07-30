@@ -12,6 +12,7 @@ interface ModalContentProps {
   onSave: (event: Event) => void;
   initialDate: Date;
 }
+
 const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
   const [eventTitle, setEventTitle] = useState('');
   const [startDate, setStartDate] = useState(
@@ -29,9 +30,8 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const startDateTime = new Date(`${startDate}T${startTime}:00`).toString();
-    const endDateTime = new Date(`${endDate}T${endTime}:00`).toString();
-    
+    const startDateTime = new Date(`${startDate}T${startTime}`).toISOString();
+    const endDateTime = new Date(`${endDate}T${endTime}`).toISOString();
     
     if (endDateTime < startDateTime) {
       setErrorMessage(
