@@ -3,6 +3,8 @@ import CalendarCells from './CalendarCells';
 import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 import CalendarTimestamps from './CalendarTimestamps';
 import { Event } from '../types';
+import { formatYearMonthDayForKey, groupEventsByWeek } from '../utils';
+import { getStartOfWeek } from '../dateUtils';
 
 interface WeekCalendarProps {
   calendarDate: Date;
@@ -11,30 +13,22 @@ interface WeekCalendarProps {
 }
 
 function WeekCalendar({ calendarDate, openModal, events }: WeekCalendarProps) {
-
- // const [multi, single] = getEvents()
-
-
+  const groupedEvents = groupEventsByWeek(events);
   return (
     <main className={styles.calendarMain}>
       <div className={styles.multiDayEventsContainer}></div>
-      {/* <SingleDayEventsContainer  events={events} date={calendarDate}/> */}
-      
+
       <CalendarWeekDayHeader calendarDate={calendarDate} />
       <CalendarTimestamps />
-      <CalendarCells calendarDate={calendarDate} openModal={openModal} events={events}/>
+      <CalendarCells
+        calendarDate={calendarDate}
+        openModal={openModal}
+        events={
+          groupedEvents[formatYearMonthDayForKey(getStartOfWeek(calendarDate))]
+        }
+      />
     </main>
   );
 }
 
 export default WeekCalendar;
-
-// [[single], [multi]]
-// [{
-//   '2024-07-29': []
-
-
-
-// }, {}]
-
-//Record<string for week starting on this day, event[]>

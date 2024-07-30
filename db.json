@@ -1,32 +1,25 @@
 {
   "events": [
     {
-      "id": "1722258882737-3379",
-      "eventTitle": "asd",
-      "startDateTime": "Mon Jul 29 2024 11:00:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Mon Jul 29 2024 12:00:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "asd"
+      "id": "1722321102992-4475",
+      "eventTitle": "pirmas",
+      "startDateTime": "Tue Jul 30 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
+      "endDateTime": "Tue Jul 30 2024 10:00:00 GMT+0300 (Eastern European Summer Time)",
+      "description": "qqqqqqq"
     },
     {
-      "id": "1722258894773-7310",
-      "eventTitle": "asdasdsadsa",
-      "startDateTime": "Mon Jul 29 2024 11:30:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Mon Jul 29 2024 17:00:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "asd"
+      "id": "1722321108473-420",
+      "eventTitle": "asdasd",
+      "startDateTime": "Wed Aug 07 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
+      "endDateTime": "Wed Aug 07 2024 10:00:00 GMT+0300 (Eastern European Summer Time)",
+      "description": "asdasd"
     },
     {
-      "id": "1722259313854-5874",
-      "eventTitle": "qwe",
-      "startDateTime": "Sun Aug 04 2024 10:00:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Sun Aug 04 2024 11:00:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "qwe"
-    },
-    {
-      "id": "1722259452928-1717",
-      "eventTitle": "asd",
-      "startDateTime": "Wed Jul 31 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
-      "endDateTime": "Wed Jul 31 2024 10:00:00 GMT+0300 (Eastern European Summer Time)",
-      "description": "asdqwdq"
+      "id": "1722321124975-3105",
+      "eventTitle": "ilgesnis",
+      "startDateTime": "Tue Jul 30 2024 09:00:00 GMT+0300 (Eastern European Summer Time)",
+      "endDateTime": "Tue Jul 30 2024 15:13:00 GMT+0300 (Eastern European Summer Time)",
+      "description": "asdasd"
     }
   ]
 }

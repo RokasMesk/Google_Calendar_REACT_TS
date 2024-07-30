@@ -1,7 +1,7 @@
+import { start } from 'repl';
 import { MINUTES_IN_HOUR } from './constants';
-import { getStartDay, getStartOfWeek } from './dateUtils';
+import { getEndOfWeek, getStartDay, getStartOfWeek } from './dateUtils';
 import { Event } from './types';
-import styles from './WeekCalendar/weekCalendar.module.css';
 export const createArray = (length: number) => {
   return new Array(length).fill(undefined);
 };
@@ -33,32 +33,31 @@ export const dateIsInRange = (
 ): boolean => {
   return startDate <= dateToCheck && endDate >= dateToCheck;
 };
-export function createEventElement(event: Event): HTMLElement {
-  const eventElement = document.createElement('div');
-  eventElement.className = styles.calendarEvent;
-  eventElement.innerHTML = `<strong>${event.eventTitle}</strong>`;
-  eventElement.addEventListener('click', (e) => {
-    e.stopPropagation();
-  });
 
-  return eventElement;
+export function formatYearMonthDayForKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
-export function groupEventsByWeek(events: Event[]) {
-  const eventsByWeek = {};
+export function groupEventsByWeek(events: Event[]): { [key: string]: Event[] } {
+  const groupedEvents: { [key: string]: Event[] } = {};
 
   events.forEach(event => {
-    const startOfWeek = getStartOfWeek(new Date(event.startDateTime));
-    const weekKey = startOfWeek.toISOString();
+    const eventDate = new Date(event.startDateTime);
+    const startOfWeekDate = getStartOfWeek(eventDate);
+    const endOfWeekDate = getEndOfWeek(eventDate);
+    const weekKey = formatYearMonthDayForKey(startOfWeekDate);
 
-    if (!eventsByWeek[weekKey]) {
-      eventsByWeek[weekKey] = [];
+    if (!groupedEvents[weekKey]) {
+      groupedEvents[weekKey] = [];
     }
 
-    eventsByWeek[weekKey].push(event);
+    if (dateIsInRange(startOfWeekDate, endOfWeekDate, eventDate)) {
+      groupedEvents[weekKey].push(event);
+    }
   });
 
-  return eventsByWeek;
+  return groupedEvents;
 }
-
-

@@ -59,11 +59,12 @@
 }
 
 .calendarEvent {
-  position: absolute;
+  position:absolute;
   background-color: rgba(85, 135, 173, 0.8);
   border: 1px solid rgb(85, 135, 173);
   border-radius: 5px;
   padding: 5px;
+  cursor: pointer;
   box-sizing: border-box;
   color: white;
   word-wrap: break-word;
@@ -72,7 +73,7 @@
 }
 
 .calendarEvent:hover {
-  z-index: 1000;
+  z-index: 50;
 }
 
 .weekHeader {
@@ -83,10 +84,9 @@
   background-color: var(--background-color);
   margin-top: 92px;
   top: 92px;
-
   position: sticky;
   height: 80px;
-  z-index: 1;
+  z-index: 100;
 }
 
 .calendarMain {
