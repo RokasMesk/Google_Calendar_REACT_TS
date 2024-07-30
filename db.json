@@ -1,32 +1,5 @@
 {
   "events": [
-    {
-      "id": "1722336815765-673",
-      "eventTitle": "qwe",
-      "startDateTime": "2024-07-31T07:00:00.000Z",
-      "endDateTime": "2024-07-31T08:00:00.000Z",
-      "description": "qqq"
-    },
-    {
-      "id": "1722341912618-8380",
-      "eventTitle": "asd",
-      "startDateTime": "2024-08-01T09:00:00.000Z",
-      "endDateTime": "2024-08-01T10:00:00.000Z",
-      "description": "asda"
-    },
-    {
-      "id": "1722344984158-7300",
-      "eventTitle": "aaaa",
-      "startDateTime": "2024-07-30T09:00:00.000Z",
-      "endDateTime": "2024-07-30T10:00:00.000Z",
-      "description": "bbbbb"
-    },
-    {
-      "id": "1722344989959-6416",
-      "eventTitle": "j",
-      "startDateTime": "2024-07-30T09:00:00.000Z",
-      "endDateTime": "2024-07-30T10:00:00.000Z",
-      "description": ""
-    }
+  
   ]
 }
