@@ -1,5 +1,5 @@
 import { DAYS_IN_WEEK } from './constants';
-import { MILLISECONDS } from './constants';
+import { MILLISECONDS_IN_HOUR } from './constants';
 export function getStartOfWeek(date: Date): Date {
   let newDate = new Date(date);
   const day = newDate.getDay();
@@ -128,5 +128,19 @@ export const differenceBetweenTwoDatesInDays = (
 ): number => {
   const startDate = new Date(date1);
   const endDate = new Date(date2);
-  return Math.ceil((endDate.getTime() - startDate.getTime()) / MILLISECONDS);
+  return Math.ceil((endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_HOUR);
 };
+
+export const dateIsInRange = (
+  startDate: Date,
+  endDate: Date,
+  dateToCheck: Date
+): boolean => {
+  return startDate <= dateToCheck && endDate >= dateToCheck;
+};
+
+export function formatYearMonthDayForKey(date: Date): string {
+  const startOfWeekDate = getStartOfWeek(date);
+
+  return startOfWeekDate.toISOString();
+}

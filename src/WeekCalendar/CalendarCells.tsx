@@ -1,6 +1,6 @@
 import styles from './weekCalendar.module.css';
 import { DAYS_IN_WEEK, CELLS_IN_COLUMN } from '../constants';
-import { createArray } from '../utils';
+import { createArray, getEventsForCell } from '../utils';
 import { getCellDateForWeekCalendar } from '../dateUtils';
 import { Event } from '../types';
 import Cell from './Cell';
@@ -21,18 +21,12 @@ const CalendarCells = ({
   };
 
   return (
-    <div className={styles.calendarCells} id="calendarCells">
+    <div className={styles.calendarCells}>
       {createArray(DAYS_IN_WEEK * CELLS_IN_COLUMN).map((_, i) => {
         const cellDate = getCellDateForWeekCalendar(calendarDate, i);
         const key = `${calendarDate.getDate()}-${calendarDate.getHours() + i}`;
 
-        const eventsForCell = events?.filter((event) => {
-          const eventStartDateTime = new Date(event.startDateTime);
-          const doesEventBelongToCurrentCell =
-            eventStartDateTime.getDate() === cellDate.getDate() &&
-            eventStartDateTime.getHours() === cellDate.getHours();
-          return doesEventBelongToCurrentCell;
-        });
+        const eventsForCell = getEventsForCell(cellDate, events);
 
         return (
           <Cell

@@ -3,7 +3,8 @@ import CalendarCells from './CalendarCells';
 import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 import CalendarTimestamps from './CalendarTimestamps';
 import { Event } from '../types';
-import { formatYearMonthDayForKey, getEventsByWeek } from '../utils';
+import {  getEventsByWeek } from '../utils';
+import { formatYearMonthDayForKey } from '../dateUtils';
 
 interface WeekCalendarProps {
   calendarDate: Date;

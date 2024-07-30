@@ -1,7 +1,6 @@
-import { start } from 'repl';
-import { MINUTES_IN_HOUR } from './constants';
-import { getEndOfWeek, getStartDay, getStartOfWeek } from './dateUtils';
+import { getEndOfWeek, getStartOfWeek,dateIsInRange, formatYearMonthDayForKey} from './dateUtils';
 import { Event } from './types';
+import { MILLISECONDS_IN_HOUR } from './constants';
 export const createArray = (length: number) => {
   return new Array(length).fill(undefined);
 };
@@ -26,24 +25,10 @@ export const doesEventOverlapWithOtherEvents = (
   });
 };
 
-export const dateIsInRange = (
-  startDate: Date,
-  endDate: Date,
-  dateToCheck: Date
-): boolean => {
-  return startDate <= dateToCheck && endDate >= dateToCheck;
-};
-
-export function formatYearMonthDayForKey(date: Date): string {
-  const startOfWeekDate = getStartOfWeek(date);
-  
-  return startOfWeekDate.toISOString();
-}
-
 export function getEventsByWeek(events: Event[]): { [key: string]: Event[] } {
   const groupedEvents: { [key: string]: Event[] } = {};
 
-  events.forEach(event => {
+  events.forEach((event) => {
     const eventDate = new Date(event.startDateTime);
     const startOfWeekDate = getStartOfWeek(eventDate);
     const endOfWeekDate = getEndOfWeek(eventDate);
@@ -60,3 +45,34 @@ export function getEventsByWeek(events: Event[]): { [key: string]: Event[] } {
 
   return groupedEvents;
 }
+
+export function getEventsForCell(cellDate: Date, events: Event[]): Event[] {
+  return events?.filter((event) => {
+    const eventStartDateTime = new Date(event.startDateTime);
+    const doesEventBelongToCurrentCell =
+      eventStartDateTime.getDate() === cellDate.getDate() &&
+      eventStartDateTime.getHours() === cellDate.getHours();
+    return doesEventBelongToCurrentCell;
+  });
+}
+export const getEventHeight = (duration: number, cellHeight: number) => {
+  return (duration / MILLISECONDS_IN_HOUR) * (cellHeight ?? 0);
+};
+
+export const getMarginTop = (startDateTime: Date, cellHeight: number) => {
+  return (startDateTime.getMinutes() / 60) * (cellHeight ?? 0);
+};
+
+export const getEventWidth = (
+  cellWidth: number,
+  overlappingEventsCount: number
+) => {
+  return cellWidth / (overlappingEventsCount + 1);
+};
+
+export const getMarginLeft = (
+  cellWidth: number,
+  overlappingEventsCount: number
+) => {
+  return (cellWidth / (overlappingEventsCount + 1)) * overlappingEventsCount;
+};

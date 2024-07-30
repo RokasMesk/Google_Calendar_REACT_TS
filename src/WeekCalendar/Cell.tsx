@@ -2,7 +2,7 @@ import { Event } from '../types';
 import CalendarEvent from './CalendarEvent';
 import { useRef } from 'react';
 import styles from './weekCalendar.module.css';
-import { MILLISECONDS } from '../constants';
+import { getEventHeight, getEventWidth, getMarginLeft, getMarginTop } from '../utils';
 
 interface CellProps {
   cellDate: Date;
@@ -13,7 +13,7 @@ interface CellProps {
 const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
   const cellRef = useRef<HTMLDivElement>(null);
   const cellWidth = (cellRef.current?.offsetWidth ?? 0) - 10;
-  const cellHeight = cellRef.current?.offsetHeight;
+  const cellHeight = cellRef.current?.offsetHeight ?? 0;
 
   return (
     <div
@@ -26,16 +26,17 @@ const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
         const endDateTime = new Date(event.endDateTime);
         const duration = endDateTime.getTime() - startDateTime.getTime();
 
-        const eventHeight = (duration / MILLISECONDS) * (cellHeight ?? 0);
-        const marginTop = (startDateTime.getMinutes() / 60) * (cellHeight ?? 0);
-
+        const eventHeight = getEventHeight(duration , cellHeight);
+        const marginTop = getMarginTop(startDateTime, cellHeight);
+        const width = getEventWidth(cellWidth, overlappingEventsCount);
+        const marginLeft = getMarginLeft(width, overlappingEventsCount);
         return (
           <CalendarEvent
             key={event.id}
-            width={cellWidth / (overlappingEventsCount + 1)}
+            width={width}
             height={eventHeight}
             marginTop={marginTop}
-            marginLeft={(cellWidth / (overlappingEventsCount + 1)) * overlappingEventsCount}
+            marginLeft={marginLeft}
             event={event}
           />
         );

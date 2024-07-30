@@ -23,13 +23,10 @@ const CreateEventModal = ({
     closeModal(false);
   };
   const handleSaveEvent = async (event: Event) => {
-    try {
-      const savedEvent = await saveEventToServer(event);
-      const updatedEvents = [...events, savedEvent];
-      setEvents(updatedEvents);
-      closeModal(false);
-    } catch (error) {
-    }
+    const savedEvent = await saveEventToServer(event);
+    const updatedEvents = [...events, savedEvent];
+    setEvents(updatedEvents);
+    closeModal(false);
   };
 
   return (

@@ -1,5 +1,5 @@
 import styles from './createEventModal.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { generateSimpleID } from '../utils';
 import { Event } from '../types';
 import { formatTimeForModalForm, addOneHour } from '../dateUtils';
