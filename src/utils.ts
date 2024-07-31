@@ -4,6 +4,7 @@ import {
   dateIsInRange,
   formatYearMonthDayForKey,
   formatKeyForCellsEvents,
+  getStartDay,
 } from './dateUtils';
 import { Event } from './types';
 import { MILLISECONDS_IN_HOUR } from './constants';
@@ -15,24 +16,37 @@ export function generateSimpleID(): string {
   return `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 }
 
-export function getEventsByWeek(events: Event[]): { [key: string]: Event[] } {
+export function getEventsByWeek(
+  events: Event[],
+  calendarDate: Date
+): [Event[], { [key: string]: Event[] }] {
   const groupedEvents: { [key: string]: Event[] } = {};
-
+  const multiDayEvents: Event[] = [];
   events.forEach((event) => {
-    const startOfWeekDate = getStartOfWeek(event.startDateTime);
-    const endOfWeekDate = getEndOfWeek(event.startDateTime);
+    const duration =
+      event.endDateTime.getTime() - event.startDateTime.getTime();
+    const startOfWeekDate = getStartOfWeek(calendarDate);
+    const endOfWeekDate = getEndOfWeek(startOfWeekDate);
     const weekKey = formatYearMonthDayForKey(startOfWeekDate);
-
-    if (!groupedEvents[weekKey]) {
+    if (
+      event.startDateTime <= endOfWeekDate &&
+      event.endDateTime >= startOfWeekDate &&
+      duration > MILLISECONDS_IN_HOUR * 24
+    )
+      multiDayEvents.push(event);
+    if (!groupedEvents[weekKey] && duration < MILLISECONDS_IN_HOUR * 24) {
       groupedEvents[weekKey] = [];
     }
 
-    if (dateIsInRange(startOfWeekDate, endOfWeekDate, event.startDateTime)) {
+    if (
+      dateIsInRange(startOfWeekDate, endOfWeekDate, event.startDateTime) &&
+      duration < MILLISECONDS_IN_HOUR * 24
+    ) {
       groupedEvents[weekKey].push(event);
     }
   });
 
-  return groupedEvents;
+  return [multiDayEvents, groupedEvents];
 }
 
 export function getEventsForCells(events: Event[]): Map<string, Event[]> {
@@ -66,4 +80,36 @@ export const getMarginLeft = (
   overlappingEventsCount: number
 ) => {
   return (cellWidth / overlappingEventsCount) * overlappingEventsCount;
+};
+
+export const getEventIndices = (event: Event, calendarDate: Date) => {
+  const startOfWeek = getStartOfWeek(calendarDate);
+  const endOfWeek = getEndOfWeek(startOfWeek);
+  let startDayIndex = -1;
+  let endDayIndex = -1;
+
+  const doesEventSpanEntireWeek =
+    event.startDateTime < startOfWeek && event.endDateTime > endOfWeek;
+  const doesEventStartBeforeAndEndCurrentWeek =
+    event.startDateTime < startOfWeek && event.endDateTime <= endOfWeek;
+  const doesEventStartCurrentAndEndNextWeek =
+    event.startDateTime >= startOfWeek && event.endDateTime > endOfWeek;
+
+  const startDay = getStartDay(event.startDateTime);
+  const endDay = getStartDay(event.endDateTime);
+  if (doesEventSpanEntireWeek) {
+    startDayIndex = 1;
+    endDayIndex = 7;
+  } else if (doesEventStartBeforeAndEndCurrentWeek) {
+    startDayIndex = 1;
+    endDayIndex = endDay;
+  } else if (doesEventStartCurrentAndEndNextWeek) {
+    startDayIndex = startDay;
+    endDayIndex = 7;
+  } else {
+    startDayIndex = startDay;
+    endDayIndex = endDay;
+  }
+
+  return { startDayIndex, endDayIndex };
 };

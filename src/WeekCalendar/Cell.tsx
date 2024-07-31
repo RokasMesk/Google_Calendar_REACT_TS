@@ -29,7 +29,6 @@ const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
   }, []);
 
   const { width: cellWidth, height: cellHeight } = cellDimensions;
-
   return (
     <div
       className={styles.cell}
