@@ -26,7 +26,7 @@ const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
         height: cellRef.current.offsetHeight,
       });
     }
-  }, [events, cellDate]);
+  }, []);
 
   const { width: cellWidth, height: cellHeight } = cellDimensions;
 
@@ -36,7 +36,7 @@ const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
       onClick={() => onCellClick(cellDate)}
       ref={cellRef}
     >
-      {events?.map((event, overlappingEventsCount) => {
+      {events.map((event, overlappingEventsCount) => {
         const duration =
           event.endDateTime.getTime() - event.startDateTime.getTime();
         const eventHeight = getEventHeight(duration, cellHeight);

@@ -21,6 +21,10 @@ export const addDays = (date: Date, days: number): Date => {
   return result;
 };
 
+export const formatKeyForCellsEvents = (date: Date) => {
+  return `${date.getFullYear()}-${date.getDate()}-${date.getHours()}`;
+};
+
 export function isToday(date: Date): boolean {
   const today = new Date();
   return (

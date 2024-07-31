@@ -29,13 +29,3 @@ export const getEventsFromServer = async (): Promise<Event[]> => {
   }
 };
 
-export const deleteEventFromStorage = async (event: Event): Promise<void> => {
-  try {
-    const response = await fetch(`${API_URL}/${event.id}`, {
-      method: 'DELETE',
-    });
-  } catch (error) {
-    console.error('Error deleting event:', error);
-    throw error;
-  }
-};
