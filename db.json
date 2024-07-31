@@ -1,18 +1,3 @@
 {
-  "events": [
-    {
-      "id": "1722428473282-5231",
-      "eventTitle": "aa",
-      "startDateTime": "2024-07-29T08:00:00.000Z",
-      "endDateTime": "2024-07-29T09:00:00.000Z",
-      "description": ""
-    },
-    {
-      "id": "1722428479433-2866",
-      "eventTitle": "qwe",
-      "startDateTime": "2024-07-31T12:00:00.000Z",
-      "endDateTime": "2024-08-11T13:00:00.000Z",
-      "description": ""
-    }
-  ]
+  "events": []
 }
