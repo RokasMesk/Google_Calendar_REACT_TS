@@ -7,7 +7,7 @@ import {
   getStartDay,
 } from './dateUtils';
 import { Event } from './types';
-import { MILLISECONDS_IN_HOUR } from './constants';
+import { MILLISECONDS_IN_HOUR, HOURS_IN_DAY } from './constants';
 export const createArray = (length: number) => {
   return new Array(length).fill(undefined);
 };
@@ -25,22 +25,23 @@ export function getEventsByWeek(
   events.forEach((event) => {
     const duration =
       event.endDateTime.getTime() - event.startDateTime.getTime();
+    const isLongerThanOneDay = duration > MILLISECONDS_IN_HOUR * HOURS_IN_DAY;
     const startOfWeekDate = getStartOfWeek(calendarDate);
     const endOfWeekDate = getEndOfWeek(startOfWeekDate);
     const weekKey = formatYearMonthDayForKey(startOfWeekDate);
     if (
       event.startDateTime <= endOfWeekDate &&
       event.endDateTime >= startOfWeekDate &&
-      duration > MILLISECONDS_IN_HOUR * 24
+      isLongerThanOneDay
     )
       multiDayEvents.push(event);
-    if (!groupedEvents[weekKey] && duration < MILLISECONDS_IN_HOUR * 24) {
+    if (!groupedEvents[weekKey] && !isLongerThanOneDay) {
       groupedEvents[weekKey] = [];
     }
 
     if (
       dateIsInRange(startOfWeekDate, endOfWeekDate, event.startDateTime) &&
-      duration < MILLISECONDS_IN_HOUR * 24
+      !isLongerThanOneDay
     ) {
       groupedEvents[weekKey].push(event);
     }
