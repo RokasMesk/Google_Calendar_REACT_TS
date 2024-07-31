@@ -24,7 +24,14 @@ const CreateEventModal = ({
   };
   const handleSaveEvent = async (event: Event) => {
     const savedEvent = await saveEventToServer(event);
-    const updatedEvents = [...events, savedEvent];
+    const updatedEvents = [
+      ...events,
+      {
+        ...savedEvent,
+        startDateTime: new Date(event.startDateTime),
+        endDateTime: new Date(event.endDateTime),
+      },
+    ];
     setEvents(updatedEvents);
     closeModal(false);
   };

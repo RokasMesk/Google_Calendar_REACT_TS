@@ -9,36 +9,21 @@ export function generateSimpleID(): string {
   return `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 }
 
-export const doesEventOverlapWithOtherEvents = (
-  eventCurrent: Event,
-  events: Event[]
-): Event[] => {
-  const eventStartDateTime = new Date(eventCurrent.startDateTime);
-  const eventEndDateTime = new Date(eventCurrent.endDateTime);
-  return events.filter((event: Event) => {
-    const eventStart = new Date(event.startDateTime);
-    const eventEnd = new Date(event.endDateTime);
-    return (
-      dateIsInRange(eventStart, eventEnd, eventStartDateTime) ||
-      dateIsInRange(eventStart, eventEnd, eventEndDateTime)
-    );
-  });
-};
 
 export function getEventsByWeek(events: Event[]): { [key: string]: Event[] } {
   const groupedEvents: { [key: string]: Event[] } = {};
 
   events.forEach((event) => {
-    const eventDate = new Date(event.startDateTime);
-    const startOfWeekDate = getStartOfWeek(eventDate);
-    const endOfWeekDate = getEndOfWeek(eventDate);
+  
+    const startOfWeekDate = getStartOfWeek(event.startDateTime);
+    const endOfWeekDate = getEndOfWeek(event.startDateTime);
     const weekKey = formatYearMonthDayForKey(startOfWeekDate);
 
     if (!groupedEvents[weekKey]) {
       groupedEvents[weekKey] = [];
     }
 
-    if (dateIsInRange(startOfWeekDate, endOfWeekDate, eventDate)) {
+    if (dateIsInRange(startOfWeekDate, endOfWeekDate, event.startDateTime)) {
       groupedEvents[weekKey].push(event);
     }
   });
@@ -48,10 +33,10 @@ export function getEventsByWeek(events: Event[]): { [key: string]: Event[] } {
 
 export function getEventsForCell(cellDate: Date, events: Event[]): Event[] {
   return events?.filter((event) => {
-    const eventStartDateTime = new Date(event.startDateTime);
+    
     const doesEventBelongToCurrentCell =
-      eventStartDateTime.getDate() === cellDate.getDate() &&
-      eventStartDateTime.getHours() === cellDate.getHours();
+      event.startDateTime.getDate() === cellDate.getDate() &&
+      event.startDateTime.getHours() === cellDate.getHours();
     return doesEventBelongToCurrentCell;
   });
 }
@@ -74,5 +59,6 @@ export const getMarginLeft = (
   cellWidth: number,
   overlappingEventsCount: number
 ) => {
-  return (cellWidth / (overlappingEventsCount + 1)) * overlappingEventsCount;
+  return (cellWidth / (overlappingEventsCount)) * overlappingEventsCount;
 };
+

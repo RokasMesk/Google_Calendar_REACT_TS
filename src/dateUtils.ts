@@ -1,5 +1,6 @@
 import { DAYS_IN_WEEK } from './constants';
 import { MILLISECONDS_IN_HOUR } from './constants';
+import { Event } from './types';
 export function getStartOfWeek(date: Date): Date {
   let newDate = new Date(date);
   const day = newDate.getDay();
@@ -8,7 +9,7 @@ export function getStartOfWeek(date: Date): Date {
   startOfWeek.setHours(0, 0, 0, 0);
   return startOfWeek;
 }
-export function getEndOfWeek(startOfWeek:Date): Date {
+export function getEndOfWeek(startOfWeek: Date): Date {
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
   endOfWeek.setHours(23, 59, 59, 999);
@@ -128,7 +129,9 @@ export const differenceBetweenTwoDatesInDays = (
 ): number => {
   const startDate = new Date(date1);
   const endDate = new Date(date2);
-  return Math.ceil((endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_HOUR);
+  return Math.ceil(
+    (endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_HOUR
+  );
 };
 
 export const dateIsInRange = (
@@ -144,3 +147,9 @@ export function formatYearMonthDayForKey(date: Date): string {
 
   return startOfWeekDate.toISOString();
 }
+
+export const convertEventDatesToObjects = (event: Event): Event => ({
+  ...event,
+  startDateTime: new Date(event.startDateTime),
+  endDateTime: new Date(event.endDateTime),
+});

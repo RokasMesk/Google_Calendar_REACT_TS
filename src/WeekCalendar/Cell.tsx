@@ -1,8 +1,13 @@
 import { Event } from '../types';
 import CalendarEvent from './CalendarEvent';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styles from './weekCalendar.module.css';
-import { getEventHeight, getEventWidth, getMarginLeft, getMarginTop } from '../utils';
+import {
+  getEventHeight,
+  getEventWidth,
+  getMarginLeft,
+  getMarginTop,
+} from '../utils';
 
 interface CellProps {
   cellDate: Date;
@@ -12,8 +17,18 @@ interface CellProps {
 
 const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
   const cellRef = useRef<HTMLDivElement>(null);
-  const cellWidth = (cellRef.current?.offsetWidth ?? 0) - 10;
-  const cellHeight = cellRef.current?.offsetHeight ?? 0;
+  const [cellDimensions, setCellDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if (cellRef.current) {
+      setCellDimensions({
+        width: cellRef.current.offsetWidth - 10,
+        height: cellRef.current.offsetHeight,
+      });
+    }
+  }, [events, cellDate]);
+
+  const { width: cellWidth, height: cellHeight } = cellDimensions;
 
   return (
     <div
@@ -22,14 +37,13 @@ const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
       ref={cellRef}
     >
       {events?.map((event, overlappingEventsCount) => {
-        const startDateTime = new Date(event.startDateTime);
-        const endDateTime = new Date(event.endDateTime);
-        const duration = endDateTime.getTime() - startDateTime.getTime();
-
-        const eventHeight = getEventHeight(duration , cellHeight);
-        const marginTop = getMarginTop(startDateTime, cellHeight);
+        const duration =
+          event.endDateTime.getTime() - event.startDateTime.getTime();
+        const eventHeight = getEventHeight(duration, cellHeight);
+        const marginTop = getMarginTop(event.startDateTime, cellHeight);
         const width = getEventWidth(cellWidth, overlappingEventsCount);
         const marginLeft = getMarginLeft(width, overlappingEventsCount);
+
         return (
           <CalendarEvent
             key={event.id}

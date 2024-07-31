@@ -30,8 +30,8 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const startDateTime = new Date(`${startDate}T${startTime}`).toISOString();
-    const endDateTime = new Date(`${endDate}T${endTime}`).toISOString();
+    const startDateTime = new Date(`${startDate}T${startTime}`);
+    const endDateTime = new Date(`${endDate}T${endTime}`);
     
     if (endDateTime < startDateTime) {
       setErrorMessage(
@@ -46,8 +46,8 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
       endDateTime,
       description,
     };
-
     onSave(event);
+ 
   };
 
   return (
