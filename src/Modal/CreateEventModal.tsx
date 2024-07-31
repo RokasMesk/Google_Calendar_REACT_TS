@@ -1,3 +1,4 @@
+import { saveEventToServer } from '../services';
 import { Event } from '../types';
 import styles from './createEventModal.module.css';
 import ModalContent from './ModalContent';
@@ -7,6 +8,8 @@ const CreateEventModal = ({
   isOpen,
   closeModal,
   date,
+  events,
+  setEvents,
 }: CreateEventModalProps) => {
   if (!isOpen) {
     return null;
@@ -19,10 +22,20 @@ const CreateEventModal = ({
   const handleCloseModal = () => {
     closeModal(false);
   };
-  const handleSaveEvent = (event: Event) => {
-    console.log('Event was saved :', event);
+  const handleSaveEvent = async (event: Event) => {
+    const savedEvent = await saveEventToServer(event);
+    const updatedEvents = [
+      ...events,
+      {
+        ...savedEvent,
+        startDateTime: new Date(event.startDateTime),
+        endDateTime: new Date(event.endDateTime),
+      },
+    ];
+    setEvents(updatedEvents);
     closeModal(false);
   };
+
   return (
     <div className={styles.modal} onClick={handleOverlayClick}>
       <ModalContent

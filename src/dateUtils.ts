@@ -1,6 +1,7 @@
 import { DAYS_IN_WEEK } from './constants';
-
-export function getFirstDayOfTheWeek(date: Date): Date {
+import { MILLISECONDS_IN_HOUR } from './constants';
+import { Event } from './types';
+export function getStartOfWeek(date: Date): Date {
   let newDate = new Date(date);
   const day = newDate.getDay();
   const diff = newDate.getDate() - day + (day === 0 ? -6 : 1);
@@ -8,10 +9,20 @@ export function getFirstDayOfTheWeek(date: Date): Date {
   startOfWeek.setHours(0, 0, 0, 0);
   return startOfWeek;
 }
+export function getEndOfWeek(startOfWeek: Date): Date {
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
+  return endOfWeek;
+}
 export const addDays = (date: Date, days: number): Date => {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
+};
+
+export const formatKeyForCellsEvents = (date: Date) => {
+  return `${date.getFullYear()}-${date.getDate()}-${date.getHours()}`;
 };
 
 export function isToday(date: Date): boolean {
@@ -107,7 +118,7 @@ export const getCellDateForWeekCalendar = (
   calendarDate: Date,
   indexOfCalendarCell: number
 ): Date => {
-  const firstDayOfWeek = getFirstDayOfTheWeek(calendarDate);
+  const firstDayOfWeek = getStartOfWeek(calendarDate);
   const day = indexOfCalendarCell % DAYS_IN_WEEK;
   const hourIndex = Math.floor(indexOfCalendarCell / DAYS_IN_WEEK);
   const cellDate = new Date(firstDayOfWeek);
@@ -115,3 +126,34 @@ export const getCellDateForWeekCalendar = (
   cellDate.setHours(5 + hourIndex);
   return cellDate;
 };
+
+export const differenceBetweenTwoDatesInDays = (
+  date1: string,
+  date2: string
+): number => {
+  const startDate = new Date(date1);
+  const endDate = new Date(date2);
+  return Math.ceil(
+    (endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_HOUR
+  );
+};
+
+export const dateIsInRange = (
+  startDate: Date,
+  endDate: Date,
+  dateToCheck: Date
+): boolean => {
+  return startDate <= dateToCheck && endDate >= dateToCheck;
+};
+
+export function formatYearMonthDayForKey(date: Date): string {
+  const startOfWeekDate = getStartOfWeek(date);
+
+  return startOfWeekDate.toISOString();
+}
+
+export const convertEventDatesToObjects = (event: Event): Event => ({
+  ...event,
+  startDateTime: new Date(event.startDateTime),
+  endDateTime: new Date(event.endDateTime),
+});

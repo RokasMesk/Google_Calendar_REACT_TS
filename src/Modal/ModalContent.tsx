@@ -1,5 +1,5 @@
 import styles from './createEventModal.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { generateSimpleID } from '../utils';
 import { Event } from '../types';
 import { formatTimeForModalForm, addOneHour } from '../dateUtils';
@@ -12,6 +12,7 @@ interface ModalContentProps {
   onSave: (event: Event) => void;
   initialDate: Date;
 }
+
 const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
   const [eventTitle, setEventTitle] = useState('');
   const [startDate, setStartDate] = useState(
@@ -29,10 +30,9 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const startDateTime = new Date(`${startDate}T${startTime}`);
     const endDateTime = new Date(`${endDate}T${endTime}`);
-
+    
     if (endDateTime < startDateTime) {
       setErrorMessage(
         '* End date and time cant be earlier than start date and time.'
@@ -46,8 +46,8 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
       endDateTime,
       description,
     };
-
     onSave(event);
+ 
   };
 
   return (
