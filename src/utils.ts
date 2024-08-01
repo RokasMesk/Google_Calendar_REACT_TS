@@ -16,12 +16,12 @@ export function generateSimpleID(): string {
   return `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 }
 
-export function getEventsByWeek(
+export function getSingleDayEventsByWeek(
   events: Event[],
   calendarDate: Date
-): [Event[], { [key: string]: Event[] }] {
-  const groupedEvents: { [key: string]: Event[] } = {};
-  const multiDayEvents: Event[] = [];
+): { [key: string]: Event[] } {
+  const groupedSingleDayEvents: { [key: string]: Event[] } = {};
+
   events.forEach((event) => {
     const duration =
       event.endDateTime.getTime() - event.startDateTime.getTime();
@@ -29,25 +29,39 @@ export function getEventsByWeek(
     const startOfWeekDate = getStartOfWeek(calendarDate);
     const endOfWeekDate = getEndOfWeek(startOfWeekDate);
     const weekKey = formatYearMonthDayForKey(startOfWeekDate);
+    if (!groupedSingleDayEvents[weekKey] && !isLongerThanOneDay) {
+      groupedSingleDayEvents[weekKey] = [];
+    }
+    if (
+      dateIsInRange(startOfWeekDate, endOfWeekDate, event.startDateTime) &&
+      !isLongerThanOneDay
+    ) {
+      groupedSingleDayEvents[weekKey].push(event);
+    }
+  });
+
+  return groupedSingleDayEvents;
+}
+
+export function getMultiDayEventsByWeek(
+  events: Event[],
+  calendarDate: Date
+): Event[] {
+  const multiDayEvents: Event[] = [];
+  events.forEach((event) => {
+    const duration =
+      event.endDateTime.getTime() - event.startDateTime.getTime();
+    const isLongerThanOneDay = duration > MILLISECONDS_IN_HOUR * HOURS_IN_DAY;
+    const startOfWeekDate = getStartOfWeek(calendarDate);
+    const endOfWeekDate = getEndOfWeek(startOfWeekDate);
     if (
       event.startDateTime <= endOfWeekDate &&
       event.endDateTime >= startOfWeekDate &&
       isLongerThanOneDay
     )
       multiDayEvents.push(event);
-    if (!groupedEvents[weekKey] && !isLongerThanOneDay) {
-      groupedEvents[weekKey] = [];
-    }
-
-    if (
-      dateIsInRange(startOfWeekDate, endOfWeekDate, event.startDateTime) &&
-      !isLongerThanOneDay
-    ) {
-      groupedEvents[weekKey].push(event);
-    }
   });
-
-  return [multiDayEvents, groupedEvents];
+  return multiDayEvents;
 }
 
 export function getEventsForCells(events: Event[]): Map<string, Event[]> {

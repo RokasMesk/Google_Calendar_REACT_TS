@@ -3,7 +3,7 @@ import CalendarCells from './CalendarCells';
 import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 import CalendarTimestamps from './CalendarTimestamps';
 import { Event } from '../types';
-import { getEventsByWeek } from '../utils';
+import { getMultiDayEventsByWeek, getSingleDayEventsByWeek } from '../utils';
 import { formatYearMonthDayForKey } from '../dateUtils';
 import MultiDayEventsContainer from './MultiDayEventContainer';
 
@@ -14,23 +14,23 @@ interface WeekCalendarProps {
 }
 
 function WeekCalendar({ calendarDate, openModal, events }: WeekCalendarProps) {
-  const [multiDayEventsForWeek, eventsByWeek] = getEventsByWeek(
+  const singleDayEventsByWeek = getSingleDayEventsByWeek(
     events,
-    calendarDate
-  );
+    calendarDate);
+  const multiDayEventsByWeek = getMultiDayEventsByWeek(events, calendarDate);
   const weekKey = formatYearMonthDayForKey(calendarDate);
   return (
     <main className={styles.calendarMain}>
       <CalendarWeekDayHeader calendarDate={calendarDate} />
       <MultiDayEventsContainer
-        multiDayEvents={multiDayEventsForWeek}
+        multiDayEvents={multiDayEventsByWeek}
         calendarDate={calendarDate}
       />
       <CalendarTimestamps />
       <CalendarCells
         calendarDate={calendarDate}
         openModal={openModal}
-        events={eventsByWeek[weekKey]}
+        events={singleDayEventsByWeek[weekKey]}
       />
     </main>
   );
