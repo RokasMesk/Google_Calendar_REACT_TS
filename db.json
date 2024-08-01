@@ -1,32 +1,5 @@
 {
   "events": [
-    {
-      "id": "1722516693845-4629",
-      "eventTitle": "asd",
-      "startDateTime": "2024-07-30T04:00:00.000Z",
-      "endDateTime": "2024-07-30T05:00:00.000Z",
-      "description": "as"
-    },
-    {
-      "id": "1722516697177-1330",
-      "eventTitle": "asd",
-      "startDateTime": "2024-08-01T08:00:00.000Z",
-      "endDateTime": "2024-08-01T09:00:00.000Z",
-      "description": "a"
-    },
-    {
-      "id": "1722516704227-1846",
-      "eventTitle": "a",
-      "startDateTime": "2024-08-01T12:00:00.000Z",
-      "endDateTime": "2024-08-04T13:00:00.000Z",
-      "description": ""
-    },
-    {
-      "id": "1722516708577-4586",
-      "eventTitle": "asd",
-      "startDateTime": "2024-07-29T07:00:00.000Z",
-      "endDateTime": "2024-07-29T08:00:00.000Z",
-      "description": ""
-    }
+    
   ]
 }
