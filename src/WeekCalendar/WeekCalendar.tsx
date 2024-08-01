@@ -2,21 +2,24 @@ import styles from './weekCalendar.module.css';
 import CalendarCells from './CalendarCells';
 import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 import CalendarTimestamps from './CalendarTimestamps';
-import { Event } from '../types';
 import { getMultiDayEventsByWeek, getSingleDayEventsByWeek } from '../utils';
 import { formatYearMonthDayForKey } from '../dateUtils';
 import MultiDayEventsContainer from './MultiDayEventContainer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import LoadingSpinner from '../components/LoadingSpinner';
 
-interface WeekCalendarProps {
-  calendarDate: Date;
-  openModal: (date: Date) => void;
-  events: Event[];
-}
+function WeekCalendar() {
+  const calendarDate = useSelector(
+    (state: RootState) => state.calendar.calendarDate
+  );
+  const events = useSelector((state: RootState) => state.events.events);
+  const status = useSelector((state: RootState) => state.events.status);
 
-function WeekCalendar({ calendarDate, openModal, events }: WeekCalendarProps) {
-  const singleDayEventsByWeek = getSingleDayEventsByWeek(
-    events,
-    calendarDate);
+  if (status === 'loading') {
+    return <LoadingSpinner />;
+  }
+  const singleDayEventsByWeek = getSingleDayEventsByWeek(events, calendarDate);
   const multiDayEventsByWeek = getMultiDayEventsByWeek(events, calendarDate);
   const weekKey = formatYearMonthDayForKey(calendarDate);
   return (
@@ -29,7 +32,6 @@ function WeekCalendar({ calendarDate, openModal, events }: WeekCalendarProps) {
       <CalendarTimestamps />
       <CalendarCells
         calendarDate={calendarDate}
-        openModal={openModal}
         events={singleDayEventsByWeek[weekKey]}
       />
     </main>

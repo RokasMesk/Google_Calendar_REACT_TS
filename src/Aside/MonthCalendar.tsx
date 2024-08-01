@@ -3,11 +3,17 @@ import MonthCalendarHeader from './MonthCalendarHeader';
 import DateCells from './DateCells';
 import MonthCalendarDayNames from './MonthCalendarDayNames';
 import { useState, useEffect } from 'react';
-interface MonthCalendarProps {
-  calendarDate: Date;
-  setCalendarDate: (date: Date) => void;
-}
-function MonthCalendar({ calendarDate, setCalendarDate }: MonthCalendarProps) {
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, setCalendarDate } from '../store';
+
+function MonthCalendar() {
+  const dispatch = useDispatch();
+  const calendarDate = useSelector(
+    (state: RootState) => state.calendar.calendarDate
+  );
+  const handleSetCalendarDate = (date: Date) => {
+    dispatch(setCalendarDate(date));
+  };
   const [displayedMonth, setDisplayedMonth] = useState(
     new Date(
       calendarDate.getFullYear(),
@@ -29,7 +35,7 @@ function MonthCalendar({ calendarDate, setCalendarDate }: MonthCalendarProps) {
       <MonthCalendarDayNames />
       <DateCells
         calendarDate={displayedMonth}
-        setCalendarDate={setCalendarDate}
+        setCalendarDate={handleSetCalendarDate}
       />
     </div>
   );
