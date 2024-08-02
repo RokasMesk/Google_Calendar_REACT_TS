@@ -28,7 +28,7 @@ const CreateEventModal = () => {
   const handleSaveEvent = async (event: Event) => {
     await saveEventToServer(event);
     dispatch(addEvent(event));
-    dispatch(closeModal());
+    handleCloseModal();
   };
 
   return (
