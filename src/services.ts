@@ -1,6 +1,6 @@
 import { Event } from './types';
 import { convertEventDatesToObjects } from './dateUtils';
-const API_URL = 'http://localhost:3002/events';
+const API_URL = 'http://localhost:3001/events';
 
 export const saveEventToServer = async (event: Event): Promise<Event> => {
   try {
