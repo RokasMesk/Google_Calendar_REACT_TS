@@ -37,9 +37,9 @@ const Header = () => {
           <span className={styles.calendarTitle}>Calendar</span>
         </div>
         <div className={styles.headerGroupControls}>
-          <TodayButton onClick={handleCurrentDay} />
-          <ArrowLeftButton onClick={handlePreviousWeek} />
-          <ArrowRightButton onClick={handleNextWeek} />
+          <TodayButton handleClick={handleCurrentDay} />
+          <ArrowLeftButton handleClick={handlePreviousWeek} />
+          <ArrowRightButton handleClick={handleNextWeek} />
 
           <CurrentYearAndMonth />
         </div>
@@ -51,9 +51,9 @@ const Header = () => {
   );
 };
 
-const TodayButton = ({ onClick }: { onClick: () => void }) => {
+const TodayButton = ({ handleClick }: { handleClick: () => void }) => {
   return (
-    <button className={styles.headerButton} onClick={onClick}>
+    <button className={styles.headerButton} onClick={handleClick}>
       Today
     </button>
   );
@@ -68,22 +68,22 @@ const WeekButton = () => {
   );
 };
 
-const ArrowLeftButton = ({ onClick }: { onClick: () => void }) => {
+const ArrowLeftButton = ({ handleClick }: { handleClick: () => void }) => {
   return (
     <button
       className={classNames(styles.headerButton, styles.noBorder)}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <ArrowLeft width={30} height={20} />
     </button>
   );
 };
 
-const ArrowRightButton = ({ onClick }: { onClick: () => void }) => {
+const ArrowRightButton = ({ handleClick }: { handleClick: () => void }) => {
   return (
     <button
       className={classNames(styles.headerButton, styles.noBorder)}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <ArrowRight width={30} height={20} />
     </button>

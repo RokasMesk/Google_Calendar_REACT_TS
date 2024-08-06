@@ -32,12 +32,16 @@ const eventsSlice = createSlice({
       .addCase(fetchEvents.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<Event[]>) => {
-        state.status = 'succeeded';
-        state.events = action.payload;
-      })
+      .addCase(
+        fetchEvents.fulfilled,
+        (state, action: PayloadAction<Event[]>) => {
+          state.status = 'succeeded';
+          state.events = action.payload;
+        }
+      )
       .addCase(fetchEvents.rejected, (state) => {
         state.status = 'failed';
+        state.error = 'Failed to fetch events';
       });
   },
 });
