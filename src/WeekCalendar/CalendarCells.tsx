@@ -32,7 +32,7 @@ const CalendarCells = ({ calendarDate, events }: CalendarCellsProps) => {
         return (
           <Cell
             cellDate={cellDate}
-            onCellClick={handleCellClick}
+            handleClick={handleCellClick}
             events={eventsForCell}
             key={key}
           />
