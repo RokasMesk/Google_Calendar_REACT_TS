@@ -1,39 +1,34 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { saveEventToServer } from '../services';
 import { Event } from '../types';
 import styles from './createEventModal.module.css';
 import ModalContent from './ModalContent';
-import { CreateEventModalProps } from './modalPropsTypes';
+import { closeModal } from '../store/slices/modalSlice';
+import { addEvent, RootState } from '../store';
 
-const CreateEventModal = ({
-  isOpen,
-  closeModal,
-  date,
-  events,
-  setEvents,
-}: CreateEventModalProps) => {
+const CreateEventModal = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state: RootState) => state.modal.isModalOpen);
+  const date = useSelector(
+    (state: RootState) => state.modal.initialDateForModal
+  );
+
   if (!isOpen) {
     return null;
   }
+
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       handleCloseModal();
     }
   };
   const handleCloseModal = () => {
-    closeModal(false);
+    dispatch(closeModal());
   };
   const handleSaveEvent = async (event: Event) => {
-    const savedEvent = await saveEventToServer(event);
-    const updatedEvents = [
-      ...events,
-      {
-        ...savedEvent,
-        startDateTime: new Date(event.startDateTime),
-        endDateTime: new Date(event.endDateTime),
-      },
-    ];
-    setEvents(updatedEvents);
-    closeModal(false);
+    await saveEventToServer(event);
+    dispatch(addEvent(event));
+    handleCloseModal();
   };
 
   return (

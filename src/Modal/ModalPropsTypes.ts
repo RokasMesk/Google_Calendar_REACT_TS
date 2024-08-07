@@ -1,4 +1,4 @@
-import { Event } from "../types";
+import { Event } from '../types';
 
 export interface ErrorMessageProps {
   errorMessage: string;
@@ -29,6 +29,4 @@ export interface CreateEventModalProps {
   isOpen: boolean;
   closeModal: (flag: boolean) => void;
   date: Date;
-  events:Event[];
-  setEvents: (events:Event[]) => void;
 }

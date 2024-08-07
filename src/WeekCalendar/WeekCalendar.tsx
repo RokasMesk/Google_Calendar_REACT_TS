@@ -2,21 +2,38 @@ import styles from './weekCalendar.module.css';
 import CalendarCells from './CalendarCells';
 import CalendarWeekDayHeader from './CalendarWeekDayHeader';
 import CalendarTimestamps from './CalendarTimestamps';
-import { Event } from '../types';
 import { getMultiDayEventsByWeek, getSingleDayEventsByWeek } from '../utils';
 import { formatYearMonthDayForKey } from '../dateUtils';
 import MultiDayEventsContainer from './MultiDayEventContainer';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, fetchEvents, AppDispatch } from '../store';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
 
-interface WeekCalendarProps {
-  calendarDate: Date;
-  openModal: (date: Date) => void;
-  events: Event[];
-}
-
-function WeekCalendar({ calendarDate, openModal, events }: WeekCalendarProps) {
-  const singleDayEventsByWeek = getSingleDayEventsByWeek(
-    events,
-    calendarDate);
+function WeekCalendar() {
+  const calendarDate = useSelector(
+    (state: RootState) => state.calendar.calendarDate
+  );
+  const events = useSelector((state: RootState) => state.events.events);
+  const status = useSelector((state: RootState) => state.events.status);
+  const error = useSelector((state: RootState) => state.events.error);
+  const dispatch = useDispatch<AppDispatch>();
+  const handleRetryClick = () => {
+    dispatch(fetchEvents());
+  };
+  switch (status) {
+    case 'loading':
+      return <LoadingSpinner />;
+    case 'failed':
+      return (
+        <ErrorMessage
+          errorMessage={error ?? 'Something went wrong'}
+          handleClick={handleRetryClick}
+        />
+      );
+    default:
+  }
+  const singleDayEventsByWeek = getSingleDayEventsByWeek(events, calendarDate);
   const multiDayEventsByWeek = getMultiDayEventsByWeek(events, calendarDate);
   const weekKey = formatYearMonthDayForKey(calendarDate);
   return (
@@ -29,7 +46,6 @@ function WeekCalendar({ calendarDate, openModal, events }: WeekCalendarProps) {
       <CalendarTimestamps />
       <CalendarCells
         calendarDate={calendarDate}
-        openModal={openModal}
         events={singleDayEventsByWeek[weekKey]}
       />
     </main>

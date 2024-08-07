@@ -1,14 +1,12 @@
 import MonthCalendar from './MonthCalendar';
 import styles from './aside.module.css';
-interface AsideProps {
-  calendarDate: Date;
-  setCalendarDate: (calendarDate: Date) => void;
-  openModal: (date: Date) => void;
-}
+import { useDispatch } from 'react-redux';
+import { openModal } from '../store';
 
-function Aside({ calendarDate, setCalendarDate, openModal }: AsideProps) {
+function Aside({}) {
+  const dispatch = useDispatch();
   const handleCreateEventClick = () => {
-    openModal(new Date());
+    dispatch(openModal(new Date()));
   };
   return (
     <aside className={styles.monthAside}>
@@ -18,10 +16,7 @@ function Aside({ calendarDate, setCalendarDate, openModal }: AsideProps) {
       >
         Create Event
       </button>
-      <MonthCalendar
-        calendarDate={calendarDate}
-        setCalendarDate={setCalendarDate}
-      />
+      <MonthCalendar />
     </aside>
   );
 }

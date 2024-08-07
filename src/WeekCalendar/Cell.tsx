@@ -11,11 +11,11 @@ import {
 
 interface CellProps {
   cellDate: Date;
-  onCellClick: (date: Date) => void;
+  handleClick: (date: Date) => void;
   events: Event[];
 }
 
-const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
+const Cell = ({ cellDate, handleClick, events }: CellProps) => {
   const cellRef = useRef<HTMLDivElement>(null);
   const [cellDimensions, setCellDimensions] = useState({ width: 0, height: 0 });
 
@@ -32,7 +32,7 @@ const Cell = ({ cellDate, onCellClick, events }: CellProps) => {
   return (
     <div
       className={styles.cell}
-      onClick={() => onCellClick(cellDate)}
+      onClick={() => handleClick(cellDate)}
       ref={cellRef}
     >
       {events.map((event, overlappingEventsCount) => {
