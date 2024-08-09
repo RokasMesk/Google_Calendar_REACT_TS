@@ -32,7 +32,7 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
     e.preventDefault();
     const startDateTime = new Date(`${startDate}T${startTime}`);
     const endDateTime = new Date(`${endDate}T${endTime}`);
-    
+
     if (endDateTime < startDateTime) {
       setErrorMessage(
         '* End date and time cant be earlier than start date and time.'
@@ -47,11 +47,10 @@ const ModalContent = ({ onClose, onSave, initialDate }: ModalContentProps) => {
       description,
     };
     onSave(event);
- 
   };
 
   return (
-    <div className={styles.modalContent}>
+    <div className={styles.modalContent} role='dialog'>
       <CloseButton onClose={onClose}></CloseButton>
       <h2>Create New Event</h2>
       <form className={styles.addEventForm} onSubmit={handleSubmit}>
@@ -130,8 +129,8 @@ export const CloseButton = ({ onClose }: CloseButtonProps) => {
 
 export const CreateEventButton = () => {
   return (
-    <button data-testid="addEventSubmit" className={styles.eventSubmitButton} type="submit">
-      Create Event
+    <button className={styles.eventSubmitButton} type="submit">
+      Submit
     </button>
   );
 };

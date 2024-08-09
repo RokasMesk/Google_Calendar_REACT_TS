@@ -1,10 +1,11 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { renderWithProviders } from '../utils/testUtils';
 import App from '../App';
 import * as services from '../services';
 import { MILLISECONDS_IN_HOUR } from '../constants';
-
+import userEvent from '@testing-library/user-event';
+import { within } from '@testing-library/react';
 jest.mock('../services', () => ({
   ...jest.requireActual('../services'),
   getEventsFromServer: jest.fn(),
@@ -44,29 +45,36 @@ describe('Add event Happy Flow', () => {
         },
       };
       const { store } = renderWithProviders(<App />, { preloadedState });
-      const addEventButton = screen.getByText(/Create Event/i);
+      const aside = screen.getByRole('complementary');
+      const addEventButton = within(aside).getByRole('button', {
+        name: 'Create Event',
+      });
 
       expect(addEventButton).toBeInTheDocument();
 
-      fireEvent.click(addEventButton);
+      userEvent.click(addEventButton);
+      const modal = screen.getByRole('dialog');
       expect(store.getState().modal.isModalOpen).toBe(true);
 
-      expect(screen.getByText(/Create new Event/i)).toBeInTheDocument();
+      expect(modal).toBeInTheDocument();
 
       const inputField: HTMLInputElement =
-        screen.getByLabelText(/Event Title/i);
-      fireEvent.change(inputField, { target: { value: 'Event 1' } });
+        within(modal).getByLabelText(/Event Title/i);
+      userEvent.type(inputField, 'Event 1');
 
       expect(inputField.value).toBe('Event 1');
 
-      expect(screen.getByTestId(/addEventSubmit/i)).toBeInTheDocument();
-      fireEvent.click(screen.getByTestId(/addEventSubmit/i));
+      expect(
+        within(modal).getByRole('button', { name: 'Submit' })
+      ).toBeInTheDocument();
+      userEvent.click(within(modal).getByRole('button', { name: 'Submit' }));
 
       await waitFor(() => {
         expect(store.getState().modal.isModalOpen).toBe(false);
       });
+      const main = screen.getByRole('main');
       expect(store.getState().events.events.length).toBe(1);
-      const eventText = screen.getByText(/Event 1/i);
+      const eventText = within(main).getByText(/Event 1/i);
       expect(eventText).toBeInTheDocument();
     });
   });

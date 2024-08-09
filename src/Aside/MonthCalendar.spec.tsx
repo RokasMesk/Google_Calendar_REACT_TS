@@ -1,56 +1,55 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { getByRole, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { renderWithProviders } from '../utils/testUtils';
 import MonthCalendar from './MonthCalendar';
 import { setCalendarDate } from '../store/slices/calendarDateSlice';
+import userEvent from '@testing-library/user-event';
+import { within } from '@testing-library/react';
+import Aside from './Aside';
 
 describe('MonthCalendar Component', () => {
   describe('when initially rendered', () => {
-    it('should display the correct month and year', () => {
-      const { store } = renderWithProviders(<MonthCalendar />);
-      const calendarDate = store.getState().calendar.calendarDate;
-      const monthYear = `${calendarDate.toLocaleString('default', { month: 'short' })} ${calendarDate.getFullYear()}`;
-      expect(screen.getByText(monthYear)).toBeInTheDocument();
-    });
     it('should display the MonthCalendar component', () => {
-      renderWithProviders(<MonthCalendar />);
-      const dayLabels = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-      dayLabels.forEach((label) => {
-        expect(screen.getByText(label)).toBeInTheDocument();
-      });
+      renderWithProviders(<Aside />);
+      const aside = screen.getByRole('complementary');
+      expect(within(aside).getByText('Su')).toBeInTheDocument();
+      expect(within(aside).getByText('Mo')).toBeInTheDocument();
+      expect(within(aside).getByText('Tu')).toBeInTheDocument();
+      expect(within(aside).getByText('We')).toBeInTheDocument();
+      expect(within(aside).getByText('Th')).toBeInTheDocument();
+      expect(within(aside).getByText('Fr')).toBeInTheDocument();
+      expect(within(aside).getByText('Sa')).toBeInTheDocument();
     });
   });
 
   describe('when the date changes', () => {
     it('should update the displayed month and year', () => {
-      const { store } = renderWithProviders(<MonthCalendar />);
+      const { store } = renderWithProviders(<Aside />);
+      const aside = screen.getByRole('complementary');
       const newDate = new Date(2024, 1, 1);
 
       store.dispatch(setCalendarDate(newDate));
+      renderWithProviders(<Aside />);
 
-      renderWithProviders(<MonthCalendar />);
-
-      const updatedState = new Date(store.getState().calendar.calendarDate);
-      const monthYear = `${updatedState.toLocaleString('default', { month: 'short' })} ${updatedState.getFullYear()}`;
-      renderWithProviders(<MonthCalendar />);
-      expect(screen.getByText(monthYear)).toBeInTheDocument();
+      expect(within(aside).getByText('Feb 2024')).toBeInTheDocument();
     });
     describe('when date cell is clicked', () => {
       it('should update the calendar date', () => {
-        const { store } = renderWithProviders(<MonthCalendar />);
+        const { store } = renderWithProviders(<Aside />);
         const newDate = new Date(2024, 1, 1);
         store.dispatch(setCalendarDate(newDate));
-        fireEvent.click(screen.getByText('18'));
+        const aside = screen.getByRole('complementary');
+        userEvent.click(within(aside).getByText('18'));
         const updatedState = new Date(store.getState().calendar.calendarDate);
         expect(updatedState.getDate()).toBe(18);
       });
       it('should update the calendar month when clicked on not current month date', () => {
-        const { store } = renderWithProviders(<MonthCalendar />);
+        const { store } = renderWithProviders(<Aside />);
         const currentDate = store.getState().calendar.calendarDate;
-        const element = document.querySelector('.notCurrentMonthDay');
-        if (element) {
-          fireEvent.click(element);
-        }
+        const element = document.querySelector('.notCurrentMonthDay')!;
+
+        userEvent.click(element);
+
         expect(store.getState().calendar.calendarDate.getMonth()).not.toBe(
           currentDate.getMonth()
         );

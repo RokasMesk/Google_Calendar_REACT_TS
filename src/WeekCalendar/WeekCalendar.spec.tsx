@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import WeekCalendar from './WeekCalendar';
 import { renderWithProviders } from '../utils/testUtils';
@@ -78,9 +78,9 @@ describe('WeekCalendar Component', () => {
         calendarDate: new Date(),
       },
     };
-
     renderWithProviders(<WeekCalendar />, { preloadedState });
-    expect(screen.getByText(/Event 1/i)).toBeInTheDocument();
-    expect(screen.getByText(/Event 2/i)).toBeInTheDocument();
+    const main = screen.getByRole('main');
+    expect(within(main).getByText(/Event 1/i)).toBeInTheDocument();
+    expect(within(main).getByText(/Event 2/i)).toBeInTheDocument();
   });
 });
