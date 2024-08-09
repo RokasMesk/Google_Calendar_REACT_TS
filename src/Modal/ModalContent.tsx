@@ -130,7 +130,7 @@ export const CloseButton = ({ onClose }: CloseButtonProps) => {
 
 export const CreateEventButton = () => {
   return (
-    <button className={styles.eventSubmitButton} type="submit">
+    <button data-testid="addEventSubmit" className={styles.eventSubmitButton} type="submit">
       Create Event
     </button>
   );
