@@ -11,7 +11,7 @@ const LabelInputPair = ({
 }: LabelInputPairProps) => {
   return (
     <div className={parentDivClassName}>
-      <label className={styles.eventFormLabel}>{labelText}</label>
+      <label htmlFor={inputName} className={styles.eventFormLabel}>{labelText}</label>
       <input
         className={inputClassName}
         type={inputType}

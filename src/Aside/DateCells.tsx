@@ -22,15 +22,11 @@ const DateCells = ({ calendarDate, setCalendarDate }: DateCellsProps) => {
   };
   const firstDayOfTheMonth = getFirstDayOfMonth(calendarDate);
 
-  const monthCalendarStartDate =
-    getMonthCalendarStartDate(firstDayOfTheMonth);
+  const monthCalendarStartDate = getMonthCalendarStartDate(firstDayOfTheMonth);
   return (
     <div className={styles.calendarWidgetDates}>
       {createArray(CELLS_IN_MONTH_CALENDAR).map((_, i) => {
-        const cellDate = getCellDateForMonthCalendar(
-          monthCalendarStartDate,
-          i
-        );
+        const cellDate = getCellDateForMonthCalendar(monthCalendarStartDate, i);
         const cellDay = cellDate.getDate();
 
         const className = classNames(styles.cell, {
