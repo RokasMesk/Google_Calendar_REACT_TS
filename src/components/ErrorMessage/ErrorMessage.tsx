@@ -8,7 +8,7 @@ interface ErrorMessageProps {
 
 function ErrorMessage({ errorMessage, handleClick }: ErrorMessageProps) {
   return (
-    <div className={styles.errorMessageContainer}>
+    <div className={styles.errorMessageContainer} data-testid="errorMessage">
       <SadFace width={200} height={200} />
       <p className={styles.errorMessage}>{errorMessage}</p>
       <button className={styles.retryButton} onClick={handleClick}>
