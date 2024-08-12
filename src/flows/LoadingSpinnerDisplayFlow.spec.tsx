@@ -12,7 +12,6 @@ jest.mock('../services', () => ({
 describe('LoadingSpinnerFlow', () => {
   describe('when events are being fetched', () => {
     it('displays and hides the loading spinner appropriately', async () => {
-      // Simulate a delay in fetching events
       (services.getEventsFromServer as jest.Mock).mockImplementation(
         () => new Promise((resolve) => setTimeout(() => resolve([]), 1000))
       );

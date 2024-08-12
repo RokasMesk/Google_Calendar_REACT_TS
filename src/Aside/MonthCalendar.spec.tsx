@@ -1,7 +1,6 @@
-import { getByRole, render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { renderWithProviders } from '../utils/testUtils';
-import MonthCalendar from './MonthCalendar';
 import { setCalendarDate } from '../store/slices/calendarDateSlice';
 import userEvent from '@testing-library/user-event';
 import { within } from '@testing-library/react';
