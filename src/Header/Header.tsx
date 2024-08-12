@@ -56,7 +56,7 @@ const TodayButton = ({ handleClick }: { handleClick: () => void }) => {
     <button
       className={styles.headerButton}
       onClick={handleClick}
-      aria-label="todayButton"
+      aria-label="Today"
     >
       Today
     </button>
@@ -77,7 +77,7 @@ const ArrowLeftButton = ({ handleClick }: { handleClick: () => void }) => {
     <button
       className={classNames(styles.headerButton, styles.noBorder)}
       onClick={handleClick}
-      aria-label="arrowLeft"
+      aria-label="Previous"
     >
       <ArrowLeft width={30} height={20} />
     </button>
@@ -89,7 +89,7 @@ const ArrowRightButton = ({ handleClick }: { handleClick: () => void }) => {
     <button
       className={classNames(styles.headerButton, styles.noBorder)}
       onClick={handleClick}
-      aria-label="arrowRight"
+      aria-label="Next"
     >
       <ArrowRight width={30} height={20} />
     </button>

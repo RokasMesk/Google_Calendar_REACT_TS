@@ -23,7 +23,7 @@ describe('Header Component', () => {
         const initialDate = store.getState().calendar.calendarDate;
         store.dispatch(setCalendarDate(initialDate));
 
-        userEvent.click(within(header).getByRole('button', { name: /arrowLeft/i }));
+        userEvent.click(within(header).getByRole('button', { name: /Previous/i }));
 
         const updatedState = store.getState().calendar.calendarDate;
         expect(updatedState).toEqual(addDays(initialDate, -7));
@@ -36,7 +36,7 @@ describe('Header Component', () => {
         const header = screen.getByRole('banner');
         const initialDate = store.getState().calendar.calendarDate;
         store.dispatch(setCalendarDate(initialDate));
-        userEvent.click(within(header).getByRole('button', { name: /arrowRight/i }));
+        userEvent.click(within(header).getByRole('button', { name: /Next/i }));
 
         const updatedState = store.getState().calendar.calendarDate;
         expect(updatedState).toEqual(addDays(initialDate, +7));
@@ -49,7 +49,7 @@ describe('Header Component', () => {
         const header = screen.getByRole('banner');
         const initialDate = store.getState().calendar.calendarDate;
         store.dispatch(setCalendarDate(addDays(initialDate, -7)));
-        userEvent.click(within(header).getByRole('button', { name: /todayButton/i }));
+        userEvent.click(within(header).getByRole('button', { name: /Today/i }));
 
         const updatedState = store.getState().calendar.calendarDate;
         expect(normalizeDate(updatedState)).toEqual(normalizeDate(new Date()));

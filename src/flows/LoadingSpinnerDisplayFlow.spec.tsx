@@ -29,11 +29,11 @@ describe('LoadingSpinnerFlow', () => {
 
       renderWithProviders(<App />, { preloadedState });
       await waitFor(() => {
-        expect(screen.getByTestId('loadingSpinner')).toBeInTheDocument();
+        expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
       });
 
       await waitFor(() => {
-        expect(screen.queryByTestId('loadingSpinner')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
       });
     });
   });

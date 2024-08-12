@@ -17,7 +17,7 @@ describe('WeekCalendar Component', () => {
       },
     };
     renderWithProviders(<WeekCalendar />, { preloadedState });
-    expect(screen.getByTestId('loadingSpinner')).toBeInTheDocument();
+    expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
   });
 
   it('should display ErrorMessage when events failed to load', () => {

@@ -52,7 +52,7 @@ describe('HeaderSwitchWeeksFlow', () => {
         expect(within(main).getByText(/Event 1/i)).toBeInTheDocument();
       });
       userEvent.click(
-        within(header).getByRole('button', { name: /arrowLeft/i })
+        within(header).getByRole('button', { name: /Previous/i })
       );
       expect(within(main).queryByText(/Event 1/i)).not.toBeInTheDocument();
       expect(store.getState().calendar.calendarDate).toEqual(
@@ -60,7 +60,7 @@ describe('HeaderSwitchWeeksFlow', () => {
       );
 
       userEvent.click(
-        within(header).getByRole('button', { name: /arrowRight/i })
+        within(header).getByRole('button', { name: /Next/i })
       );
       expect(store.getState().calendar.calendarDate).toEqual(initialDate);
 
